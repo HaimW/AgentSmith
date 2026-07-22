@@ -181,6 +181,7 @@ security-architect  # or any single specialist for a targeted review
 
 ---
 
-*A styled, interactive version of this guide can also be generated as an
-artifact — but this Markdown copy is the portable one: it renders anywhere,
-including offline.*
+*Prefer the styled version? Open [`swarm-guide.html`](swarm-guide.html) in a
+browser — same content, richer layout (diagrams need internet, via mermaid CDN).
+This Markdown copy is the fully portable one: it renders anywhere, including on
+GitHub and offline.*
