@@ -5,7 +5,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "generate": "node tools/generate.mjs",
+    "validate": "node tools/validate.mjs",
+    "generate": "node tools/validate.mjs && node tools/generate.mjs",
     "init": "node tools/init.mjs",
     "sync": "node tools/sync.mjs"
   },

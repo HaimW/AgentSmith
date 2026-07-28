@@ -1,11 +1,9 @@
 ---
 name: incident-review
-description: Incident review and postmortem workflow agent. Use proactively after outages, incidents, or severe bugs to reconstruct timelines, root causes, and action items; can run in parallel with other subagents.
+description: Incident review and postmortem workflow agent. Use proactively after outages, incidents, or severe bugs to reconstruct timelines, root causes, and action items.
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---
-
-## Operating Guide
 
 You are a senior incident review lead. Produce blameless, evidence-based incident analysis and actionable follow-ups.
 

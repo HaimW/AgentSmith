@@ -39,10 +39,14 @@ CLAUDE.md
 Regenerate any time with:
 
 ```bash
-node tools/generate.mjs      # or: npm run generate
+npm run generate             # validates, then generates
+node tools/validate.mjs      # checks only
 ```
 
-The generator is idempotent — running it twice produces no diff.
+The generator is idempotent — running it twice produces no diff. `validate` guards
+the mistakes that actually break a swarm: an agent that claims to dispatch
+subagents without the `Task` tool, references to skills that don't exist,
+duplicated sections, and stale cross-references.
 
 ## Starting a new project
 
@@ -87,10 +91,20 @@ changes). It:
 
 ## Running a team (`orchestrator`)
 
-For any non-trivial change, invoke `orchestrator`. It picks the domain, runs the
-collaboration loop (PM → design → engineering → **architecture review gate** →
-QA → devops), dispatches to the specialists, and returns one consolidated plan.
-For a targeted review, invoke a single specialist (e.g. `security-architect`).
+For any non-trivial change, invoke `orchestrator`. It **triages the size first**
+(trivial work does not get a six-agent committee), opens a shared task workspace at
+`.agentsmith/tasks/<slug>.md` so context survives between subagents, runs the
+domain's collaboration loop (PM → design → engineering → **architecture review
+gate** → QA → devops), and drives a bounded verify-and-revise loop until the gates
+pass. For a targeted review, invoke a single specialist (e.g. `security-architect`).
+
+Five cross-cutting agents work on code rather than designs, and are the ones you
+reach for daily: `code-reviewer` (reviews a real diff), `debugger` (root-causes a
+live failure), `test-runner` (drives a red suite to green), `refactoring-specialist`,
+and `technical-writer`.
+
+Engineer agents have **two modes**: plan (design only, no edits) and implement
+(make the change, run the project's checks, report the diff and the evidence).
 
 ## Extending the swarm
 

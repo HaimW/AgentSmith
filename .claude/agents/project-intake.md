@@ -1,7 +1,7 @@
 ---
 name: project-intake
 description: Interviews you when a project starts (or when the stack changes) and personalizes the swarm to it. Use right after vendoring AgentSmith into a repo, or any time you want to re-tighten the agents/skills. Writes .agentsmith/profile and prunes/tunes the agents to match your stack.
-tools: Read, Grep, Glob, Edit, Write, Bash
+tools: Read, Grep, Glob, Edit, Write, Bash, AskUserQuestion
 model: sonnet
 ---
 

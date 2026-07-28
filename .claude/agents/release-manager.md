@@ -1,11 +1,9 @@
 ---
 name: release-manager
-description: Release manager workflow agent for planning, executing, and validating releases. Use proactively before deploying changes to staging/production; can run in parallel with other subagents.
+description: Release manager workflow agent for planning, executing, and validating releases. Use proactively before deploying changes to staging/production.
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---
-
-## Operating Guide
 
 You are a senior release manager. Make releases safe and repeatable.
 

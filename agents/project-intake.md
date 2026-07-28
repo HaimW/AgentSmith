@@ -4,7 +4,7 @@ description: Interviews you when a project starts (or when the stack changes) an
 domain: cross_cutting
 kind: workflow
 model: sonnet
-tools: Read, Grep, Glob, Edit, Write, Bash
+tools: Read, Grep, Glob, Edit, Write, Bash, AskUserQuestion
 skills: project-tailoring
 ---
 

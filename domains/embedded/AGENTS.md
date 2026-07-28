@@ -6,14 +6,14 @@ This domain is for building **embedded systems** (firmware, drivers, toolchains,
 
 ### Roles (agents)
 
-- `devops-build-engineer-embedded`: Embedded build/DevOps engineer for toolchains, reproducible builds, packaging, and CI for firmware artifacts. Use proactively for embedded CI/build issues; can run in parallel with other subagents.
-- `embedded-product-manager`: Embedded PM owning requirements and constraints (timing/memory/power) and delivery readiness. Use proactively for embedded initiative definition and prioritization; can run in parallel with other subagents.
-- `embedded-system-architect`: Embedded system architect providing concise reviews of timing/memory/power budgets and hardware–software interface risks. Use proactively for embedded designs; can run in parallel with other subagents.
-- `firmware-engineer`: Firmware engineer for embedded application logic under timing/memory/power constraints. Use proactively for firmware implementation plans and debugging; can run in parallel with other subagents.
-- `hardware-integration-engineer`: Hardware/board integration engineer for bring-up, interface validation, and cross-layer debugging. Use proactively when hardware constraints or integration risk exists; can run in parallel with other subagents.
-- `low-level-software-engineer`: Low-level embedded engineer for drivers/BSP/interrupt-level code and performance constraints. Use proactively for driver plans, bring-up support, and performance-critical debugging; can run in parallel with other subagents.
-- `qa-engineer-embedded`: Embedded QA engineer for lab testing, HIL coordination, and release confidence. Use proactively for embedded test planning and defect triage; can run in parallel with other subagents.
-- `test-automation-engineer-embedded`: Embedded test automation engineer for HIL/simulation regression and reproducible test harnesses. Use proactively for embedded regression automation and CI signal; can run in parallel with other subagents.
+- `devops-build-engineer-embedded`: Embedded build/DevOps engineer for toolchains, reproducible builds, packaging, and CI for firmware artifacts. Use proactively for embedded CI/build issues.
+- `embedded-product-manager`: Embedded PM owning requirements and constraints (timing/memory/power) and delivery readiness. Use proactively for embedded initiative definition and prioritization.
+- `embedded-system-architect`: Embedded system architect providing concise reviews of timing/memory/power budgets and hardware–software interface risks. Use proactively for embedded designs.
+- `firmware-engineer`: Firmware engineer for embedded application logic under timing/memory/power constraints. Use proactively for firmware implementation plans and debugging.
+- `hardware-integration-engineer`: Hardware/board integration engineer for bring-up, interface validation, and cross-layer debugging. Use proactively when hardware constraints or integration risk exists.
+- `low-level-software-engineer`: Low-level embedded engineer for drivers/BSP/interrupt-level code and performance constraints. Use proactively for driver plans, bring-up support, and performance-critical debugging.
+- `qa-engineer-embedded`: Embedded QA engineer for lab testing, HIL coordination, and release confidence. Use proactively for embedded test planning and defect triage.
+- `test-automation-engineer-embedded`: Embedded test automation engineer for HIL/simulation regression and reproducible test harnesses. Use proactively for embedded regression automation and CI signal.
 
 ### Typical interactions (default "embedded delivery loop")
 
