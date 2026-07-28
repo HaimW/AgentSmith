@@ -6,15 +6,15 @@ This domain is for building **service and data platforms** (APIs, jobs, pipeline
 
 ### Roles (agents)
 
-- `backend-engineer-platform`: Backend engineer for platform services/jobs with reliability and operability focus. Use proactively for API/service design and backend debugging in data-intensive systems; can run in parallel with other subagents.
-- `backend-system-architect`: Backend-heavy system architect providing concise reviews of service boundaries, integration patterns, and data ownership. Use proactively for platform/data-intensive designs; can run in parallel with other subagents.
-- `data-engineer`: Data engineer for pipelines/ETL, data quality, and orchestration in backend-heavy systems. Use proactively for pipeline design, backfills, and data reliability; can run in parallel with other subagents.
-- `database-engineer`: Database engineer for schema/indexing/migrations and query performance. Use proactively for data modeling and performance-critical changes; can run in parallel with other subagents.
-- `devops-sre-engineer-platform`: DevOps/SRE engineer for backend-heavy platforms: infra, CI/CD, scaling, and cost. Use proactively for deployments, environments, and operational readiness; can run in parallel with other subagents.
-- `observability-reliability-engineer`: Reliability engineer for SLIs/SLOs, instrumentation, alerting, and incident patterns in backend-heavy systems. Use proactively for operational readiness and guardrails; can run in parallel with other subagents.
-- `platform-product-manager`: Platform PM for backend-heavy systems: roadmap, adoption, success metrics, and constraints. Use proactively for platform initiative definition and prioritization; can run in parallel with other subagents.
-- `qa-engineer-api`: QA engineer for API correctness, performance, and reliability testing. Use proactively to create risk-based test plans for platform changes; can run in parallel with other subagents.
-- `test-automation-engineer-api`: Test automation engineer for contract and integration suites for backend-heavy systems. Use proactively for contract testing and CI signal improvements; can run in parallel with other subagents.
+- `backend-engineer-platform`: Backend engineer for platform services/jobs with reliability and operability focus. Use proactively for API/service design and backend debugging in data-intensive systems.
+- `backend-system-architect`: Backend-heavy system architect providing concise reviews of service boundaries, integration patterns, and data ownership. Use proactively for platform/data-intensive designs.
+- `data-engineer`: Data engineer for pipelines/ETL, data quality, and orchestration in backend-heavy systems. Use proactively for pipeline design, backfills, and data reliability.
+- `database-engineer`: Database engineer for schema/indexing/migrations and query performance. Use proactively for data modeling and performance-critical changes.
+- `devops-sre-engineer-platform`: DevOps/SRE engineer for backend-heavy platforms: infra, CI/CD, scaling, and cost. Use proactively for deployments, environments, and operational readiness.
+- `observability-reliability-engineer`: Reliability engineer for SLIs/SLOs, instrumentation, alerting, and incident patterns in backend-heavy systems. Use proactively for operational readiness and guardrails.
+- `platform-product-manager`: Platform PM for backend-heavy systems: roadmap, adoption, success metrics, and constraints. Use proactively for platform initiative definition and prioritization.
+- `qa-engineer-api`: QA engineer for API correctness, performance, and reliability testing. Use proactively to create risk-based test plans for platform changes.
+- `test-automation-engineer-api`: Test automation engineer for contract and integration suites for backend-heavy systems. Use proactively for contract testing and CI signal improvements.
 
 ### Typical interactions (default "platform delivery loop")
 

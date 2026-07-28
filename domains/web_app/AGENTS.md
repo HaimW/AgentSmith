@@ -6,15 +6,15 @@ This domain is for building and operating a **web application product** (UI, API
 
 ### Roles (agents)
 
-- `backend-engineer-web`: Backend engineer for web-facing APIs/BFF, security, and business logic. Use proactively for web API design and backend debugging; can run in parallel with other subagents.
-- `devops-sre-engineer-web`: Web DevOps/SRE engineer for CI/CD, environments, observability, and reliability. Use proactively when setting up deployments, monitoring, and release safety; can run in parallel with other subagents.
-- `frontend-engineer`: Frontend engineer for SPA/SSR architecture, performance, and accessibility. Use proactively for web UI implementation plans and reviews; can run in parallel with other subagents.
-- `fullstack-engineer-web`: Fullstack engineer for cross-cutting web delivery across frontend, backend, and integration. Use proactively for end-to-end feature plans; can run in parallel with other subagents.
-- `qa-engineer-web`: Web QA engineer for risk-based functional and exploratory testing. Use proactively to create test plans for web features and releases; can run in parallel with other subagents.
-- `test-automation-engineer-web`: Web test automation engineer for e2e/integration suites and CI signal quality. Use proactively when adding automated coverage or reducing flakiness; can run in parallel with other subagents.
-- `ux-ui-designer`: UX/UI designer for user flows, UI states, and accessibility-oriented specs. Use proactively when designing web product experiences; can run in parallel with other subagents.
-- `web-product-manager`: Web product manager owning outcomes, scope, and acceptance criteria. Use proactively to define requirements, prioritize work, and align cross-functional roles; can run in parallel with other subagents.
-- `web-system-architect`: Web domain system architect providing short, high-signal architecture reviews (tradeoffs, NFRs, risks). Use proactively when a web design or plan is drafted; can run in parallel with other subagents.
+- `backend-engineer-web`: Backend engineer for web-facing APIs/BFF, security, and business logic. Use proactively for web API design and backend debugging.
+- `devops-sre-engineer-web`: Web DevOps/SRE engineer for CI/CD, environments, observability, and reliability. Use proactively when setting up deployments, monitoring, and release safety.
+- `frontend-engineer`: Frontend engineer for SPA/SSR architecture, performance, and accessibility. Use proactively for web UI implementation plans and reviews.
+- `fullstack-engineer-web`: Fullstack engineer for cross-cutting web delivery across frontend, backend, and integration. Use proactively for end-to-end feature plans.
+- `qa-engineer-web`: Web QA engineer for risk-based functional and exploratory testing. Use proactively to create test plans for web features and releases.
+- `test-automation-engineer-web`: Web test automation engineer for e2e/integration suites and CI signal quality. Use proactively when adding automated coverage or reducing flakiness.
+- `ux-ui-designer`: UX/UI designer for user flows, UI states, and accessibility-oriented specs. Use proactively when designing web product experiences.
+- `web-product-manager`: Web product manager owning outcomes, scope, and acceptance criteria. Use proactively to define requirements, prioritize work, and align cross-functional roles.
+- `web-system-architect`: Web domain system architect providing short, high-signal architecture reviews (tradeoffs, NFRs, risks). Use proactively when a web design or plan is drafted.
 
 ### Typical interactions (default "product team loop")
 

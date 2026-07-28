@@ -38,9 +38,50 @@ one-off output:
 3. **You explained the same "how" twice?** Capture it as a **skill** (use the
    `skill-author` skill), not as prose in an agent. Skills are shared across
    roles and stay DRY.
-4. **Regenerate & commit:** `node tools/generate.mjs` then commit. In a vendored
-   project, optionally promote the change back to the AgentSmith upstream so every
-   project benefits.
+4. **Regenerate & commit:** `npm run generate` (validates, then generates) then
+   commit. In a vendored project, optionally promote the change back to the
+   AgentSmith upstream so every project benefits.
+
+`node tools/validate.mjs` runs on its own too. It catches the mistakes that
+actually bite: an agent that says it dispatches subagents but lacks the `Task`
+tool, a reference to a skill that doesn't exist, duplicated sections, and stale
+cross-references between agents.
+
+## Orchestration patterns (worth learning properly)
+
+A pipeline is only one way to run a team. The `orchestrator` uses several, and
+knowing the names helps you reason about what your swarm is doing.
+
+| Pattern | What it is | When to reach for it |
+|---------|-----------|----------------------|
+| **Router** | Classify the request first, then send it down the smallest path | Always — it's why `orchestrator` triages trivial / standard / complex |
+| **Sequential pipeline** | Fixed stage order, each feeding the next | The domain loops (PM → design → eng → review → QA) |
+| **Parallel fan-out / fan-in** | Independent agents at once, then merge | Frontend ∥ backend proposals; architecture ∥ security review |
+| **Evaluator–optimizer** | Produce → critique → revise, bounded | Review gates and failing tests — the loop that makes output actually good |
+| **Hierarchical** | A lead delegates to other leads | Large work; needs the `Task` tool to dispatch |
+
+Three rules that matter more than the names:
+
+1. **Subagents don't share context.** Each one sees only what you pass in and
+   returns only what it reports. That's why `orchestrator` keeps a task workspace
+   at `.agentsmith/tasks/<slug>.md` — decisions live on disk, not in a context
+   window that's about to disappear.
+2. **A loop needs a brake.** Every revise cycle has a maximum (3) and an escalation
+   path. Loops without stop conditions burn time and money.
+3. **Match process to size.** Six agents on a typo is waste. The fast path exists
+   so the heavy loop stays credible when you actually need it.
+
+## The cross-cutting doers
+
+Alongside the domain roles, five agents work on code rather than designs. These
+are the ones you'll reach for daily:
+
+- **`code-reviewer`** — reviews a real diff before you commit. Run it after any
+  non-trivial change.
+- **`debugger`** — root-causes a live failure and fixes the cause, not the symptom.
+- **`test-runner`** — runs the suite and drives it back to green without weakening it.
+- **`refactoring-specialist`** — restructures code while proving behavior is unchanged.
+- **`technical-writer`** — READMEs, setup guides, ADRs, changelogs.
 
 ## Tuning frontmatter deliberately
 

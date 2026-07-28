@@ -20,54 +20,59 @@ plus reusable skills — under `.claude/agents/` and `.claude/skills/`.
 
 ### web_app
 
-- `backend-engineer-web` — Backend engineer for web-facing APIs/BFF, security, and business logic. Use proactively for web API design and backend debugging; can run in parallel with other subagents.
-- `devops-sre-engineer-web` — Web DevOps/SRE engineer for CI/CD, environments, observability, and reliability. Use proactively when setting up deployments, monitoring, and release safety; can run in parallel with other subagents.
-- `frontend-engineer` — Frontend engineer for SPA/SSR architecture, performance, and accessibility. Use proactively for web UI implementation plans and reviews; can run in parallel with other subagents.
-- `fullstack-engineer-web` — Fullstack engineer for cross-cutting web delivery across frontend, backend, and integration. Use proactively for end-to-end feature plans; can run in parallel with other subagents.
-- `qa-engineer-web` — Web QA engineer for risk-based functional and exploratory testing. Use proactively to create test plans for web features and releases; can run in parallel with other subagents.
-- `test-automation-engineer-web` — Web test automation engineer for e2e/integration suites and CI signal quality. Use proactively when adding automated coverage or reducing flakiness; can run in parallel with other subagents.
-- `ux-ui-designer` — UX/UI designer for user flows, UI states, and accessibility-oriented specs. Use proactively when designing web product experiences; can run in parallel with other subagents.
-- `web-product-manager` — Web product manager owning outcomes, scope, and acceptance criteria. Use proactively to define requirements, prioritize work, and align cross-functional roles; can run in parallel with other subagents.
-- `web-system-architect` — Web domain system architect providing short, high-signal architecture reviews (tradeoffs, NFRs, risks). Use proactively when a web design or plan is drafted; can run in parallel with other subagents.
+- `backend-engineer-web` — Backend engineer for web-facing APIs/BFF, security, and business logic. Use proactively for web API design and backend debugging.
+- `devops-sre-engineer-web` — Web DevOps/SRE engineer for CI/CD, environments, observability, and reliability. Use proactively when setting up deployments, monitoring, and release safety.
+- `frontend-engineer` — Frontend engineer for SPA/SSR architecture, performance, and accessibility. Use proactively for web UI implementation plans and reviews.
+- `fullstack-engineer-web` — Fullstack engineer for cross-cutting web delivery across frontend, backend, and integration. Use proactively for end-to-end feature plans.
+- `qa-engineer-web` — Web QA engineer for risk-based functional and exploratory testing. Use proactively to create test plans for web features and releases.
+- `test-automation-engineer-web` — Web test automation engineer for e2e/integration suites and CI signal quality. Use proactively when adding automated coverage or reducing flakiness.
+- `ux-ui-designer` — UX/UI designer for user flows, UI states, and accessibility-oriented specs. Use proactively when designing web product experiences.
+- `web-product-manager` — Web product manager owning outcomes, scope, and acceptance criteria. Use proactively to define requirements, prioritize work, and align cross-functional roles.
+- `web-system-architect` — Web domain system architect providing short, high-signal architecture reviews (tradeoffs, NFRs, risks). Use proactively when a web design or plan is drafted.
 
 ### backend_heavy
 
-- `backend-engineer-platform` — Backend engineer for platform services/jobs with reliability and operability focus. Use proactively for API/service design and backend debugging in data-intensive systems; can run in parallel with other subagents.
-- `backend-system-architect` — Backend-heavy system architect providing concise reviews of service boundaries, integration patterns, and data ownership. Use proactively for platform/data-intensive designs; can run in parallel with other subagents.
-- `data-engineer` — Data engineer for pipelines/ETL, data quality, and orchestration in backend-heavy systems. Use proactively for pipeline design, backfills, and data reliability; can run in parallel with other subagents.
-- `database-engineer` — Database engineer for schema/indexing/migrations and query performance. Use proactively for data modeling and performance-critical changes; can run in parallel with other subagents.
-- `devops-sre-engineer-platform` — DevOps/SRE engineer for backend-heavy platforms: infra, CI/CD, scaling, and cost. Use proactively for deployments, environments, and operational readiness; can run in parallel with other subagents.
-- `observability-reliability-engineer` — Reliability engineer for SLIs/SLOs, instrumentation, alerting, and incident patterns in backend-heavy systems. Use proactively for operational readiness and guardrails; can run in parallel with other subagents.
-- `platform-product-manager` — Platform PM for backend-heavy systems: roadmap, adoption, success metrics, and constraints. Use proactively for platform initiative definition and prioritization; can run in parallel with other subagents.
-- `qa-engineer-api` — QA engineer for API correctness, performance, and reliability testing. Use proactively to create risk-based test plans for platform changes; can run in parallel with other subagents.
-- `test-automation-engineer-api` — Test automation engineer for contract and integration suites for backend-heavy systems. Use proactively for contract testing and CI signal improvements; can run in parallel with other subagents.
+- `backend-engineer-platform` — Backend engineer for platform services/jobs with reliability and operability focus. Use proactively for API/service design and backend debugging in data-intensive systems.
+- `backend-system-architect` — Backend-heavy system architect providing concise reviews of service boundaries, integration patterns, and data ownership. Use proactively for platform/data-intensive designs.
+- `data-engineer` — Data engineer for pipelines/ETL, data quality, and orchestration in backend-heavy systems. Use proactively for pipeline design, backfills, and data reliability.
+- `database-engineer` — Database engineer for schema/indexing/migrations and query performance. Use proactively for data modeling and performance-critical changes.
+- `devops-sre-engineer-platform` — DevOps/SRE engineer for backend-heavy platforms: infra, CI/CD, scaling, and cost. Use proactively for deployments, environments, and operational readiness.
+- `observability-reliability-engineer` — Reliability engineer for SLIs/SLOs, instrumentation, alerting, and incident patterns in backend-heavy systems. Use proactively for operational readiness and guardrails.
+- `platform-product-manager` — Platform PM for backend-heavy systems: roadmap, adoption, success metrics, and constraints. Use proactively for platform initiative definition and prioritization.
+- `qa-engineer-api` — QA engineer for API correctness, performance, and reliability testing. Use proactively to create risk-based test plans for platform changes.
+- `test-automation-engineer-api` — Test automation engineer for contract and integration suites for backend-heavy systems. Use proactively for contract testing and CI signal improvements.
 
 ### embedded
 
-- `devops-build-engineer-embedded` — Embedded build/DevOps engineer for toolchains, reproducible builds, packaging, and CI for firmware artifacts. Use proactively for embedded CI/build issues; can run in parallel with other subagents.
-- `embedded-product-manager` — Embedded PM owning requirements and constraints (timing/memory/power) and delivery readiness. Use proactively for embedded initiative definition and prioritization; can run in parallel with other subagents.
-- `embedded-system-architect` — Embedded system architect providing concise reviews of timing/memory/power budgets and hardware–software interface risks. Use proactively for embedded designs; can run in parallel with other subagents.
-- `firmware-engineer` — Firmware engineer for embedded application logic under timing/memory/power constraints. Use proactively for firmware implementation plans and debugging; can run in parallel with other subagents.
-- `hardware-integration-engineer` — Hardware/board integration engineer for bring-up, interface validation, and cross-layer debugging. Use proactively when hardware constraints or integration risk exists; can run in parallel with other subagents.
-- `low-level-software-engineer` — Low-level embedded engineer for drivers/BSP/interrupt-level code and performance constraints. Use proactively for driver plans, bring-up support, and performance-critical debugging; can run in parallel with other subagents.
-- `qa-engineer-embedded` — Embedded QA engineer for lab testing, HIL coordination, and release confidence. Use proactively for embedded test planning and defect triage; can run in parallel with other subagents.
-- `test-automation-engineer-embedded` — Embedded test automation engineer for HIL/simulation regression and reproducible test harnesses. Use proactively for embedded regression automation and CI signal; can run in parallel with other subagents.
+- `devops-build-engineer-embedded` — Embedded build/DevOps engineer for toolchains, reproducible builds, packaging, and CI for firmware artifacts. Use proactively for embedded CI/build issues.
+- `embedded-product-manager` — Embedded PM owning requirements and constraints (timing/memory/power) and delivery readiness. Use proactively for embedded initiative definition and prioritization.
+- `embedded-system-architect` — Embedded system architect providing concise reviews of timing/memory/power budgets and hardware–software interface risks. Use proactively for embedded designs.
+- `firmware-engineer` — Firmware engineer for embedded application logic under timing/memory/power constraints. Use proactively for firmware implementation plans and debugging.
+- `hardware-integration-engineer` — Hardware/board integration engineer for bring-up, interface validation, and cross-layer debugging. Use proactively when hardware constraints or integration risk exists.
+- `low-level-software-engineer` — Low-level embedded engineer for drivers/BSP/interrupt-level code and performance constraints. Use proactively for driver plans, bring-up support, and performance-critical debugging.
+- `qa-engineer-embedded` — Embedded QA engineer for lab testing, HIL coordination, and release confidence. Use proactively for embedded test planning and defect triage.
+- `test-automation-engineer-embedded` — Embedded test automation engineer for HIL/simulation regression and reproducible test harnesses. Use proactively for embedded regression automation and CI signal.
 
 ### cross_cutting
 
-- `automation-architect` — Cross-domain automation architect for test frameworks, CI execution patterns, and stable environments. Use proactively to review automation approaches; can run in parallel with other subagents.
-- `devops-platform-architect` — Cross-domain DevOps/platform architect for CI/CD standards, IaC patterns, environments, and deploy safety. Use proactively to review infra/pipeline plans; can run in parallel with other subagents.
-- `incident-review` — Incident review and postmortem workflow agent. Use proactively after outages, incidents, or severe bugs to reconstruct timelines, root causes, and action items; can run in parallel with other subagents.
-- `observability-architect` — Cross-domain observability architect for SLIs/SLOs, instrumentation, dashboards, and alerting. Use proactively to review operational readiness; can run in parallel with other subagents.
-- `orchestrator` — Lead agent that runs a full team on a task. Use to kick off any non-trivial change: it picks the domain, sequences the collaboration loop (PM -> design -> engineering -> architecture review -> QA -> devops), and dispatches to the specialist role agents.
+- `automation-architect` — Cross-domain automation architect for test frameworks, CI execution patterns, and stable environments. Use proactively to review automation approaches.
+- `code-reviewer` — Reviews code that has actually been written - diffs, new files, pull requests - for correctness, security, and maintainability. Use immediately after any non-trivial code change, and before committing or opening a PR. Reviews implementations, not designs.
+- `debugger` — Root-causes a failure that is happening now - a failing test, an exception, a stack trace, a build error, or wrong output. Use whenever something is broken and the cause is not yet known. Finds the actual cause and fixes it, rather than patching the symptom.
+- `devops-platform-architect` — Cross-domain DevOps/platform architect for CI/CD standards, IaC patterns, environments, and deploy safety. Use proactively to review infra/pipeline plans.
+- `incident-review` — Incident review and postmortem workflow agent. Use proactively after outages, incidents, or severe bugs to reconstruct timelines, root causes, and action items.
+- `observability-architect` — Cross-domain observability architect for SLIs/SLOs, instrumentation, dashboards, and alerting. Use proactively to review operational readiness.
+- `orchestrator` — Lead agent that runs a full team on a task. Use to kick off any non-trivial change - it triages size, sequences the collaboration loop (PM, design, engineering, architecture review, QA, devops), dispatches specialist subagents, and drives a verify-and-revise loop until the work passes its gates.
 - `project-intake` — Interviews you when a project starts (or when the stack changes) and personalizes the swarm to it. Use right after vendoring AgentSmith into a repo, or any time you want to re-tighten the agents/skills. Writes .agentsmith/profile and prunes/tunes the agents to match your stack.
-- `qa-architect` — Cross-domain QA architect for risk-based test strategy and quality gates. Use proactively to review test plans and release readiness; can run in parallel with other subagents.
-- `release-manager` — Release manager workflow agent for planning, executing, and validating releases. Use proactively before deploying changes to staging/production; can run in parallel with other subagents.
-- `security-architect` — Security architect for threat modeling and secure design reviews. Use proactively for designs involving auth, data, or external exposure; can run in parallel with other subagents.
+- `qa-architect` — Cross-domain QA architect for risk-based test strategy and quality gates. Use proactively to review test plans and release readiness.
+- `refactoring-specialist` — Improves the structure of existing code without changing its behavior - extracting duplication, untangling large functions, clarifying names, reducing coupling. Use when code is hard to change, before building on a messy area, or after a feature lands. Never mixes refactoring with behavior changes.
+- `release-manager` — Release manager workflow agent for planning, executing, and validating releases. Use proactively before deploying changes to staging/production.
+- `security-architect` — Security architect for threat modeling and secure design reviews. Use proactively for designs involving auth, data, or external exposure.
+- `technical-writer` — Writes and maintains project documentation - READMEs, setup guides, API docs, architecture decision records, and changelogs. Use when docs are missing, stale, or a change alters how someone uses or operates the system.
+- `test-runner` — Runs the project's tests, build, lint, and type checks, then diagnoses and fixes what fails. Use to verify a change actually works, to get a red suite back to green, or before committing. Executes the suite - it does not just design test strategy.
 
 ## Skills
 
-Reusable playbooks live in `.claude/skills/`: `api-design`, `architecture-review`, `ci-cd`, `log-analysis`, `performance-tuning`, `project-tailoring`, `security-review`, `skill-author`, `testing`.
+Reusable playbooks live in `.claude/skills/`: `api-design`, `architecture-review`, `ci-cd`, `code-review`, `debugging`, `documentation`, `log-analysis`, `performance-tuning`, `project-tailoring`, `refactoring`, `security-review`, `skill-author`, `testing`.
 
 ## Editing the swarm
 
