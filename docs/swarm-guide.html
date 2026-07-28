@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Working the Swarm — AgentSmith operating guide</title>
+<style>
+  :root{
+    --ground:#EFF1F2; --surface:#FFFFFF; --surface-2:#E7EAEC;
+    --ink:#191B1E; --ink-2:#565B61; --line:#D5D9DC;
+    --hot:#B34C1B; --hot-tint:#F0E1D8;
+    --cold:#256A93; --cold-tint:#DBE8F0;
+    --panel:#191C20; --panel-line:#333A42; --panel-ink:#E9ECEF;
+    --font-display:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --font-body:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --font-mono:ui-monospace,"SF Mono","Cascadia Code","JetBrains Mono",Menlo,Consolas,monospace;
+    --maxw:840px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --ground:#131518; --surface:#1B1E22; --surface-2:#23272C;
+      --ink:#EAECEE; --ink-2:#9AA0A7; --line:#2C3138;
+      --hot:#E27A45; --hot-tint:#3A2A20;
+      --cold:#5AA0CB; --cold-tint:#1E2C38;
+    }
+  }
+  :root[data-theme="light"]{
+    --ground:#EFF1F2; --surface:#FFFFFF; --surface-2:#E7EAEC;
+    --ink:#191B1E; --ink-2:#565B61; --line:#D5D9DC;
+    --hot:#B34C1B; --hot-tint:#F0E1D8; --cold:#256A93; --cold-tint:#DBE8F0;
+  }
+  :root[data-theme="dark"]{
+    --ground:#131518; --surface:#1B1E22; --surface-2:#23272C;
+    --ink:#EAECEE; --ink-2:#9AA0A7; --line:#2C3138;
+    --hot:#E27A45; --hot-tint:#3A2A20; --cold:#5AA0CB; --cold-tint:#1E2C38;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);
+    font-family:var(--font-body);font-size:17px;line-height:1.65;
+    -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  a{color:var(--cold)}
+
+  /* ---- header ---- */
+  header{padding:72px 0 40px;border-bottom:1px solid var(--line);margin-bottom:8px}
+  .eyebrow{font-family:var(--font-mono);font-size:12.5px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--hot);margin:0 0 18px}
+  h1{font-family:var(--font-display);font-weight:800;letter-spacing:-.025em;
+    font-size:clamp(2.4rem,6vw,3.6rem);line-height:1.02;margin:0;text-wrap:balance}
+  .lede{font-size:1.15rem;color:var(--ink-2);max-width:60ch;margin:20px 0 0}
+
+  section{padding:44px 0;border-bottom:1px solid var(--line)}
+  h2{font-family:var(--font-display);font-weight:750;letter-spacing:-.02em;
+    font-size:1.7rem;margin:0 0 6px;text-wrap:balance}
+  h2 .n{font-family:var(--font-mono);font-weight:600;color:var(--cold);
+    font-size:1rem;margin-right:.7em;letter-spacing:0}
+  .sub{color:var(--ink-2);margin:0 0 26px;max-width:64ch}
+  p{max-width:66ch}
+  strong{font-weight:680}
+  code{font-family:var(--font-mono);font-size:.86em;background:var(--surface-2);
+    padding:.12em .4em;border-radius:4px;border:1px solid var(--line)}
+
+  /* ---- layer cards ---- */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:8px 0 4px}
+  @media(max-width:680px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    padding:20px 18px;border-top:3px solid var(--cold)}
+  .card:nth-child(1){border-top-color:var(--hot)}
+  .card .tag{font-family:var(--font-mono);font-size:11px;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--ink-2)}
+  .card h3{font-family:var(--font-mono);font-size:1rem;margin:6px 0 2px}
+  .card .role{font-weight:750;font-size:1.15rem;margin:2px 0 8px}
+  .card p{font-size:.95rem;color:var(--ink-2);margin:0}
+
+  /* ---- diagram panels ---- */
+  figure{margin:26px 0 8px}
+  .diagram{background:var(--panel);border:1px solid var(--panel-line);
+    border-radius:14px;padding:22px 14px;overflow-x:auto}
+  .diagram pre.mermaid{margin:0;min-width:520px;text-align:center;
+    font-family:var(--font-mono)}
+  figcaption{font-family:var(--font-mono);font-size:12px;letter-spacing:.04em;
+    color:var(--ink-2);margin-top:12px;text-align:center}
+  .legend{display:flex;gap:22px;flex-wrap:wrap;justify-content:center;
+    margin:16px 0 0;font-family:var(--font-mono);font-size:12.5px;color:var(--ink-2)}
+  .legend span{display:inline-flex;align-items:center;gap:8px}
+  .dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .dot.hot{background:var(--hot)} .dot.cold{background:var(--cold)}
+
+  /* ---- steps ---- */
+  .step{display:grid;grid-template-columns:52px 1fr;gap:20px;margin:0 0 34px}
+  @media(max-width:560px){.step{grid-template-columns:1fr;gap:8px}}
+  .step .num{font-family:var(--font-mono);font-weight:700;font-size:1.5rem;
+    color:var(--hot);border:1.5px solid var(--line);border-radius:11px;
+    height:52px;display:flex;align-items:center;justify-content:center;
+    background:var(--surface)}
+  .step h3{font-family:var(--font-display);font-weight:720;font-size:1.22rem;
+    margin:6px 0 6px;letter-spacing:-.01em}
+  .step p{margin:0 0 12px}
+  .step .body>*:last-child{margin-bottom:0}
+
+  pre.cmd{font-family:var(--font-mono);font-size:13.5px;line-height:1.6;
+    background:var(--panel);color:var(--panel-ink);border:1px solid var(--panel-line);
+    border-radius:10px;padding:15px 16px;overflow-x:auto;margin:0 0 6px}
+  pre.cmd .c{color:#8a93a3}
+  pre.cmd .k{color:var(--cold)} pre.cmd .g{color:#7fb87f}
+
+  .callout{border-left:3px solid var(--hot);background:var(--hot-tint);
+    padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:.95rem}
+  .callout b{font-family:var(--font-mono);font-size:.8rem;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--hot)}
+
+  /* ---- glossary ---- */
+  dl.gloss{display:grid;grid-template-columns:auto 1fr;gap:2px 22px;margin:0}
+  @media(max-width:560px){dl.gloss{grid-template-columns:1fr;gap:2px}}
+  dl.gloss dt{font-family:var(--font-mono);font-weight:600;color:var(--cold);
+    padding:9px 0;border-top:1px solid var(--line)}
+  dl.gloss dd{margin:0;padding:9px 0;border-top:1px solid var(--line);color:var(--ink-2)}
+  @media(max-width:560px){dl.gloss dd{border-top:none;padding-top:0}}
+
+  footer{padding:36px 0 72px;color:var(--ink-2);font-size:.9rem;font-family:var(--font-mono)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">AgentSmith · Operating Guide</p>
+    <h1>Working the Swarm</h1>
+    <p class="lede">You don't manage 35 agents one by one. You write each role once, forge it into tool-ready folders, then let one lead agent run the team. Here's the whole operation, start to finish.</p>
+  </header>
+
+  <section>
+    <h2>The one idea to hold onto</h2>
+    <p class="sub">There is exactly <strong>one place you edit</strong> (the source) and <strong>one command that builds everything else</strong>. Every folder Cursor and Claude Code actually read is generated — treat it as output, like compiled code.</p>
+    <div class="cards">
+      <div class="card">
+        <span class="tag">the WHO</span>
+        <div class="role">Agents</div>
+        <p>Specialists — a frontend engineer, a security architect, a QA lead. Each is one file with a job, a toolset, and a model.</p>
+      </div>
+      <div class="card">
+        <span class="tag">the HOW</span>
+        <div class="role">Skills</div>
+        <p>Reusable playbooks (testing, API design, CI/CD). Shared across agents so knowledge lives in one spot.</p>
+      </div>
+      <div class="card">
+        <span class="tag">the TEAM</span>
+        <div class="role">Domains</div>
+        <p>Which roles work together and in what order — the collaboration loop for web, backend, or embedded work.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="n">A</span>How the pieces fit — the forge</h2>
+    <p class="sub">You edit the <span style="color:var(--hot)">hot</span> side. One command — the generator — casts it into the <span style="color:var(--cold)">cold</span>, tool-specific folders. Never edit the cold side by hand; the next build overwrites it.</p>
+    <figure>
+      <div class="diagram">
+<pre class="mermaid">
+%%{init:{'theme':'base','themeVariables':{'background':'#191C20','primaryColor':'#22262d','primaryTextColor':'#e9ecef','primaryBorderColor':'#5b6473','lineColor':'#8a93a3','fontFamily':'ui-monospace, monospace','fontSize':'14px'}}}%%
+flowchart LR
+  subgraph SRC["CANONICAL SOURCE · you edit"]
+    direction TB
+    A["agents/ROLE.md"]
+    S["skills/NAME/SKILL.md"]
+    D["domains/NAME/loop.md"]
+  end
+  G(["node generate.mjs"])
+  subgraph OUT["GENERATED · never edit"]
+    direction TB
+    C1[".cursor/ agents + skills"]
+    C2[".claude/ agents + skills"]
+    CM["CLAUDE.md"]
+  end
+  A --> G
+  S --> G
+  D --> G
+  G --> C1
+  G --> C2
+  G --> CM
+  class A,S,D hot
+  class C1,C2,CM cold
+  classDef hot fill:#3a2a20,stroke:#e27a45,color:#f2e6dd,stroke-width:1.5px
+  classDef cold fill:#1e2c38,stroke:#5aa0cb,color:#e0eaf2,stroke-width:1.5px
+</pre>
+      </div>
+      <div class="legend">
+        <span><i class="dot hot"></i> source you edit</span>
+        <span><i class="dot cold"></i> generated output</span>
+      </div>
+      <figcaption>Fig. A — one source → one build → every tool folder</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2><span class="n">B</span>The workflow, in five moves</h2>
+    <p class="sub">This is the whole operation. Do step 1 once per project, step 2 once per project, then live in steps 3–5.</p>
+
+    <div class="step">
+      <div class="num">1</div>
+      <div class="body">
+        <h3>Get the swarm into a project</h3>
+        <p>Two ways in. Start a fresh repo from the template, or drop the swarm into a repo you already have. The second vendors an editable copy under <code>.agentsmith/</code> and builds the tool folders at the root.</p>
+        <pre class="cmd"><span class="c"># fresh repo: click "Use this template" on GitHub, then:</span>
+<span class="k">node</span> tools/generate.mjs
+
+<span class="c"># existing repo (run from an AgentSmith checkout):</span>
+<span class="k">node</span> tools/init.mjs /path/to/your-project <span class="k">--tool</span> both</pre>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">2</div>
+      <div class="body">
+        <h3>Personalize it to the project</h3>
+        <p>Run the <code>project-intake</code> agent. It interviews you (auto-reading your stack first), saves a profile, <strong>deletes the roles you don't need</strong>, and tightens the rest to your stack — so the swarm starts sharp instead of generic. Re-run it any time the project changes.</p>
+        <div class="callout"><b>Why it matters</b> — a web project shouldn't carry a firmware engineer. Intake prunes the org chart down to your reality.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">3</div>
+      <div class="body">
+        <h3>Run a team on a task</h3>
+        <p>For anything non-trivial, invoke <code>orchestrator</code> with a one-line request. It picks the domain and runs the collaboration loop below — dispatching each specialist, pausing at the architecture-review gate, and returning one consolidated plan. For a quick opinion, call a single specialist instead (e.g. <code>security-architect</code>).</p>
+        <figure>
+          <div class="diagram">
+<pre class="mermaid">
+%%{init:{'theme':'base','themeVariables':{'background':'#191C20','primaryColor':'#22262d','primaryTextColor':'#e9ecef','primaryBorderColor':'#5b6473','lineColor':'#8a93a3','fontFamily':'ui-monospace, monospace','fontSize':'14px'}}}%%
+flowchart TB
+  U["your one-line request"] --> O(["orchestrator"])
+  O --> PM["product-manager<br/>problem + acceptance criteria"]
+  PM --> DES["ux-ui-designer<br/>flows + edge cases"]
+  DES --> ENG["engineers<br/>solution approach"]
+  ENG --> ARCH{"system-architect<br/>REVIEW GATE"}
+  ARCH -->|risks addressed| QA["qa + test-automation<br/>test strategy + suites"]
+  QA --> OPS["devops-sre<br/>ci/cd + monitoring"]
+  OPS --> OUT["one consolidated plan"]
+  class O,ARCH hot
+  class U,OUT cold
+  classDef hot fill:#3a2a20,stroke:#e27a45,color:#f2e6dd,stroke-width:1.5px
+  classDef cold fill:#1e2c38,stroke:#5aa0cb,color:#e0eaf2,stroke-width:1.5px
+</pre>
+          </div>
+          <figcaption>Fig. C — the orchestrator drives the loop; the architect is a gate, not a rubber stamp</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">4</div>
+      <div class="body">
+        <h3>Improve as you go</h3>
+        <p>This is the habit that makes you good at it. When an agent's output disappoints, <strong>fix the source, not the one-off reply</strong>: sharpen its description (when it triggers), its tools (what it can touch), or move repeated know-how into a skill. Rebuild, commit, repeat.</p>
+        <figure>
+          <div class="diagram">
+<pre class="mermaid">
+%%{init:{'theme':'base','themeVariables':{'background':'#191C20','primaryColor':'#22262d','primaryTextColor':'#e9ecef','primaryBorderColor':'#5b6473','lineColor':'#8a93a3','fontFamily':'ui-monospace, monospace','fontSize':'14px'}}}%%
+flowchart LR
+  RUN["run a task"] --> SEE["spot a weak output"]
+  SEE --> EDIT["edit the agent / skill source"]
+  EDIT --> GEN["node generate.mjs"]
+  GEN --> COMMIT["commit"]
+  COMMIT --> RUN
+  COMMIT -.->|optional| UP["promote to upstream template"]
+  class EDIT hot
+  class UP cold
+  classDef hot fill:#3a2a20,stroke:#e27a45,color:#f2e6dd,stroke-width:1.5px
+  classDef cold fill:#1e2c38,stroke:#5aa0cb,color:#e0eaf2,stroke-width:1.5px
+</pre>
+          </div>
+          <figcaption>Fig. D — the improvement loop: every fix lands in the source and compounds</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">5</div>
+      <div class="body">
+        <h3>Keep projects in sync</h3>
+        <p>When you improve the shared template, pull those updates into a project with <code>sync</code>. It's safe: files you edited locally are never overwritten — the upstream version arrives beside yours as <code>.upstream</code> so you can merge deliberately.</p>
+        <pre class="cmd"><span class="k">node</span> .agentsmith/tools/sync.mjs <span class="k">--dry-run</span>   <span class="c"># preview</span>
+<span class="k">node</span> .agentsmith/tools/sync.mjs             <span class="c"># apply + rebuild</span></pre>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="n">C</span>Where the swarm lives once installed</h2>
+    <p class="sub">In any project you've run <code>init</code> on, the layout looks like this. You touch <code>.agentsmith/</code>; the tools read the rest.</p>
+    <figure>
+      <div class="diagram">
+<pre class="mermaid">
+%%{init:{'theme':'base','themeVariables':{'background':'#191C20','primaryColor':'#22262d','primaryTextColor':'#e9ecef','primaryBorderColor':'#5b6473','lineColor':'#8a93a3','fontFamily':'ui-monospace, monospace','fontSize':'13px'}}}%%
+flowchart TB
+  subgraph REPO["your-project/"]
+    direction TB
+    AS[".agentsmith/  · editable source + generate.mjs, sync.mjs"]
+    PR[".agentsmith/profile.md  · written by project-intake"]
+    CU[".cursor/  · read by Cursor"]
+    CL[".claude/ + CLAUDE.md  · read by Claude Code"]
+  end
+  AS --> CU
+  AS --> CL
+  class AS,PR hot
+  class CU,CL cold
+  classDef hot fill:#3a2a20,stroke:#e27a45,color:#f2e6dd,stroke-width:1.5px
+  classDef cold fill:#1e2c38,stroke:#5aa0cb,color:#e0eaf2,stroke-width:1.5px
+</pre>
+      </div>
+      <figcaption>Fig. E — one editable home, two generated read-surfaces</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Command cheat sheet</h2>
+    <pre class="cmd"><span class="k">node</span> tools/generate.mjs              <span class="c"># rebuild .cursor/ + .claude/ from source</span>
+<span class="k">node</span> tools/init.mjs &lt;path&gt; --tool both  <span class="c"># install swarm into another repo</span>
+<span class="k">node</span> .agentsmith/tools/sync.mjs      <span class="c"># pull upstream updates (conflict-safe)</span>
+
+<span class="c"># in Cursor / Claude Code, invoke agents by name:</span>
+project-intake     <span class="c"># interview + personalize (run once per project)</span>
+orchestrator       <span class="c"># run a full team on a task</span>
+security-architect <span class="c"># or any single specialist for a targeted review</span></pre>
+  </section>
+
+  <section>
+    <h2>Glossary</h2>
+    <dl class="gloss">
+      <dt>agent</dt><dd>A single specialist role you can invoke. One file, one job.</dd>
+      <dt>skill</dt><dd>A reusable playbook (the "how") shared across agents.</dd>
+      <dt>domain</dt><dd>A team of agents + the order they collaborate in.</dd>
+      <dt>orchestrator</dt><dd>The lead agent that runs a whole team for you.</dd>
+      <dt>project-intake</dt><dd>The agent that interviews you and tailors the swarm to one project.</dd>
+      <dt>canonical</dt><dd>The single source you edit: <code>agents/</code>, <code>skills/</code>, <code>domains/</code>.</dd>
+      <dt>generated</dt><dd>Built output the tools read: <code>.cursor/</code>, <code>.claude/</code>, <code>CLAUDE.md</code>. Never hand-edit.</dd>
+      <dt>init / sync</dt><dd>Install the swarm into a repo / pull later updates without losing local edits.</dd>
+    </dl>
+  </section>
+
+  <footer>AgentSmith — write once, forge everywhere.</footer>
+</div>
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+  mermaid.initialize({ startOnLoad: true, securityLevel: "loose" });
+</script>
+</body>
+</html>
