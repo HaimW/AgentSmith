@@ -1,12 +1,11 @@
 #!/usr/bin/env node
-// Generate tool-specific folders from the canonical source.
+// Generate the Claude Code folders from the canonical source.
 //
 //   agents/*.md            (canonical, hand-edited)
 //   skills/*/SKILL.md      (canonical, hand-edited)
 //   domains/*/loop.md      (canonical, hand-edited)
 //        |
 //        v   node tools/generate.mjs
-//   .cursor/agents/*  .cursor/skills/*     (Cursor)
 //   .claude/agents/*  .claude/skills/*     (Claude Code)
 //   domains/*/AGENTS.md                    (org-chart index)
 //   CLAUDE.md                              (Claude Code entry point)
@@ -19,7 +18,7 @@ import { join, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 // SRC  = where the canonical source lives (parent of this tools/ dir).
-// OUT  = where generated tool folders (.cursor/.claude/CLAUDE.md) are written.
+// OUT  = where the generated folders (.claude/, CLAUDE.md) are written.
 //        Same as SRC in this template repo. When the swarm is vendored into a
 //        consumer repo under `.agentsmith/`, OUT is that repo's root so the
 //        tools find their folders at the top level. Override with AGENTSMITH_OUT.
@@ -52,7 +51,7 @@ const agents = readdirSync(p('agents'))
   })
   .sort((a, b) => a.name.localeCompare(b.name));
 
-// Append a generated "## Skills" section so both tools show the role's skills.
+// Append a generated "## Skills" section so each role lists the skills it uses.
 function withSkills(body, fm) {
   const skills = list(fm.skills);
   if (!skills.length) return body;
@@ -66,18 +65,18 @@ function frontmatter(pairs) {
 }
 
 // ---------- reset generated dirs ----------
-for (const d of ['.cursor/agents', '.claude/agents', '.cursor/skills', '.claude/skills']) {
+for (const d of ['.claude/agents', '.claude/skills']) {
   rmSync(o(d), { recursive: true, force: true });
   mkdirSync(o(d), { recursive: true });
 }
 
 // ---------- emit agents ----------
+// Claude Code is the only emit target. To add another tool (e.g. Cursor),
+// add its dir to the reset loop above, write a second file here with whatever
+// frontmatter that tool supports (Cursor: name + description only, no
+// tools/model), and copy skills/ into its folder below.
 for (const a of agents) {
   const body = withSkills(a.body, a.fm);
-
-  // Cursor: name + description only.
-  const cursor = frontmatter([['name', a.name], ['description', a.fm.description]]) + '\n' + body + '\n';
-  writeFileSync(o('.cursor/agents', a.file), cursor, 'utf8');
 
   // Claude Code: name, description, tools, model (documented fields).
   const claude = frontmatter([
@@ -90,7 +89,6 @@ for (const a of agents) {
 }
 
 // ---------- copy skills verbatim ----------
-cpSync(p('skills'), o('.cursor/skills'), { recursive: true });
 cpSync(p('skills'), o('.claude/skills'), { recursive: true });
 
 // ---------- regenerate domain AGENTS.md indexes ----------
@@ -159,10 +157,10 @@ Reusable playbooks live in \`.claude/skills/\`: ${
 
 ## Editing the swarm
 
-Do **not** edit \`.claude/\` or \`.cursor/\` by hand — they are generated. Edit the
+Do **not** edit \`.claude/\` by hand — it is generated. Edit the
 canonical source in \`agents/*.md\`, \`skills/*/SKILL.md\`, and \`domains/*/loop.md\`,
 then run \`node tools/generate.mjs\`.
 `;
 writeFileSync(o('CLAUDE.md'), claudeMd, 'utf8');
 
-console.log(`Generated ${agents.length} agents -> .cursor/ + .claude/, ${domains.length} domain indexes, CLAUDE.md (out: ${OUT})`);
+console.log(`Generated ${agents.length} agents -> .claude/, ${domains.length} domain indexes, CLAUDE.md (out: ${OUT})`);

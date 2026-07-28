@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 // Vendor the AgentSmith swarm into another repository.
 //
-//   node tools/init.mjs <target-repo-path> [--tool cursor|claude|both]
+//   node tools/init.mjs <target-repo-path>
 //
 // What it does:
 //   1. Copies the canonical source (agents/, skills/, domains/, tools/) into
 //      <target>/.agentsmith/  — the swarm's editable home in the consumer repo.
 //   2. Writes <target>/.agentsmith/manifest.json stamping the upstream commit
 //      and a hash of every vendored file (used later by sync.mjs).
-//   3. Generates .cursor/ and/or .claude/ + CLAUDE.md at the target root.
+//   3. Generates .claude/ + CLAUDE.md at the target root.
 //
 // Zero dependencies (Node >= 18 stdlib).
 import { execFileSync } from 'node:child_process';
@@ -24,10 +24,8 @@ const SRC = join(dirname(fileURLToPath(import.meta.url)), '..');
 // ---------- args ----------
 const args = process.argv.slice(2);
 const target = args.find((a) => !a.startsWith('--'));
-const toolArg = (args.find((a) => a.startsWith('--tool')) || '--tool=both').split('=')[1]
-  || args[args.indexOf('--tool') + 1] || 'both';
 if (!target) {
-  console.error('Usage: node tools/init.mjs <target-repo-path> [--tool cursor|claude|both]');
+  console.error('Usage: node tools/init.mjs <target-repo-path>');
   process.exit(1);
 }
 const TARGET = resolve(target);
@@ -77,27 +75,20 @@ try {
 writeFileSync(join(HOME, 'manifest.json'), JSON.stringify({
   upstream,
   commit,
-  tool: toolArg,
+  tool: 'claude',
   vendoredAt: new Date().toISOString(),
   files: hashTree(HOME),
 }, null, 2) + '\n', 'utf8');
 
-// ---------- generate tool folders at target root ----------
+// ---------- generate the Claude Code folders at target root ----------
 execFileSync('node', [join(HOME, 'tools', 'generate.mjs')], {
   stdio: 'inherit',
   env: { ...process.env, AGENTSMITH_OUT: TARGET },
 });
 
-// ---------- honor --tool by removing the unwanted generated folder ----------
-if (toolArg === 'cursor') cpSyncRemove(join(TARGET, '.claude'));
-if (toolArg === 'claude') cpSyncRemove(join(TARGET, '.cursor'));
-function cpSyncRemove(dir) {
-  if (existsSync(dir)) execFileSync('rm', ['-rf', dir]);
-}
-
 console.log(`\n✓ Vendored AgentSmith into ${HOME}`);
-console.log(`✓ Generated ${toolArg} folder(s) at ${TARGET}`);
+console.log(`✓ Generated .claude/ + CLAUDE.md at ${TARGET}`);
 console.log('\nNext steps:');
-console.log('  1. Commit .agentsmith/, .cursor/ and/or .claude/, and CLAUDE.md.');
+console.log('  1. Commit .agentsmith/, .claude/, and CLAUDE.md.');
 console.log('  2. Run the `project-intake` agent to personalize the swarm to this repo.');
 console.log('  3. Later, run `node .agentsmith/tools/sync.mjs` to pull upstream updates.');

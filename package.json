@@ -1,7 +1,7 @@
 {
   "name": "agentsmith",
   "version": "1.0.0",
-  "description": "Tool-agnostic swarm of engineering subagents + skills that generates Cursor and Claude Code folders.",
+  "description": "Swarm of engineering subagents + skills, generated from one canonical source into Claude Code folders.",
   "type": "module",
   "private": true,
   "scripts": {
