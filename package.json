@@ -7,6 +7,7 @@
   "scripts": {
     "validate": "node tools/validate.mjs",
     "generate": "node tools/validate.mjs && node tools/generate.mjs",
+    "eval": "node evals/run.mjs",
     "init": "node tools/init.mjs",
     "sync": "node tools/sync.mjs"
   },

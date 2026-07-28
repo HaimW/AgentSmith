@@ -8,13 +8,17 @@ place, and AgentSmith generates the runnable **Claude Code** folders (`.claude/`
 It provides:
 
 - **Domains** with opinionated role sets (`web_app`, `backend_heavy`, `embedded`,
-  `cross_cutting`).
+  `cross_cutting`). Web and services teams run as **continuous flow**; reviews
+  advise rather than gate.
 - **Roles as runnable subagents** (PMs, architects, engineers, QA, DevOps) with
   least-privilege `tools` and per-role `model` selection.
 - **Reusable skills / playbooks** (testing, API design, architecture review,
   CI/CD, security review, …).
 - An **orchestrator** that runs a whole team on a task, and a **project-intake**
   agent that interviews you and tightens the swarm to your project.
+- **Evals** (`evals/`) so you can measure whether a change to an agent actually
+  helped, instead of guessing.
+- **Hooks + CI** that enforce the rules rather than merely stating them.
 
 ## Single source of truth
 
@@ -40,7 +44,8 @@ Regenerate any time with:
 
 ```bash
 npm run generate             # validates, then generates
-node tools/validate.mjs      # checks only
+npm run validate             # checks only
+npm run eval                 # score the agents against the golden tasks
 ```
 
 The generator is idempotent — running it twice produces no diff. `validate` guards
@@ -94,14 +99,27 @@ changes). It:
 For any non-trivial change, invoke `orchestrator`. It **triages the size first**
 (trivial work does not get a six-agent committee), opens a shared task workspace at
 `.agentsmith/tasks/<slug>.md` so context survives between subagents, runs the
-domain's collaboration loop (PM → design → engineering → **architecture review
-gate** → QA → devops), and drives a bounded verify-and-revise loop until the gates
-pass. For a targeted review, invoke a single specialist (e.g. `security-architect`).
+domain's delivery flow, and drives a bounded verify-and-revise loop until the work
+is actually verified. Reviews are **advisory** — the implementing engineer decides
+and owns the result. For a targeted review, invoke a single specialist (e.g.
+`security-architect`).
 
 Five cross-cutting agents work on code rather than designs, and are the ones you
 reach for daily: `code-reviewer` (reviews a real diff), `debugger` (root-causes a
 live failure), `test-runner` (drives a red suite to green), `refactoring-specialist`,
 and `technical-writer`.
+
+## Measuring changes (`evals/`)
+
+Tuning an agent by feel is how swarms rot. `evals/` holds golden tasks scored
+against fixtures with **deliberately seeded defects**, so a change is measured:
+
+```bash
+node evals/run.mjs --save baseline    # before editing an agent
+node evals/run.mjs --compare baseline # after — improvements and regressions
+```
+
+See [`evals/README.md`](evals/README.md).
 
 Engineer agents have **two modes**: plan (design only, no edits) and implement
 (make the change, run the project's checks, report the diff and the evidence).
@@ -125,7 +143,7 @@ output contract.
 
 ## Conventions
 
-- **Agent / skill names:** lowercase kebab-case (`web-system-architect`).
+- **Agent / skill names:** lowercase kebab-case (`system-architect`).
 - **Domains:** snake_case directories under `domains/`.
 - **Architect roles** produce concise reviews: **Summary / Strengths / Risks /
   Recommendations**.

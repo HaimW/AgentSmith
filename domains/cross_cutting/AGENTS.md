@@ -6,18 +6,18 @@ This domain holds **reusable, cross-domain** roles that provide short, expert re
 
 ### Roles (agents)
 
-- `automation-architect`: Cross-domain automation architect for test frameworks, CI execution patterns, and stable environments. Use proactively to review automation approaches.
 - `code-reviewer`: Reviews code that has actually been written - diffs, new files, pull requests - for correctness, security, and maintainability. Use immediately after any non-trivial code change, and before committing or opening a PR. Reviews implementations, not designs.
 - `debugger`: Root-causes a failure that is happening now - a failing test, an exception, a stack trace, a build error, or wrong output. Use whenever something is broken and the cause is not yet known. Finds the actual cause and fixes it, rather than patching the symptom.
-- `devops-platform-architect`: Cross-domain DevOps/platform architect for CI/CD standards, IaC patterns, environments, and deploy safety. Use proactively to review infra/pipeline plans.
 - `incident-review`: Incident review and postmortem workflow agent. Use proactively after outages, incidents, or severe bugs to reconstruct timelines, root causes, and action items.
-- `observability-architect`: Cross-domain observability architect for SLIs/SLOs, instrumentation, dashboards, and alerting. Use proactively to review operational readiness.
-- `orchestrator`: Lead agent that runs a full team on a task. Use to kick off any non-trivial change - it triages size, sequences the collaboration loop (PM, design, engineering, architecture review, QA, devops), dispatches specialist subagents, and drives a verify-and-revise loop until the work passes its gates.
+- `orchestrator`: Lead agent that runs a full team on a task. Use to kick off any non-trivial change - it triages size, runs the domain's delivery flow, dispatches specialist subagents, keeps a shared task workspace, and drives a bounded verify-and-revise loop until the work is actually verified.
+- `platform-engineer`: Owns the paved road - CI/CD pipelines, environments, deploys, infrastructure-as-code, and the self-service tooling teams use to ship. Use for pipeline work, deployment and rollback strategy, environment setup, and making releases boring.
+- `product-manager`: Frames the problem and defines what "done" means - user outcome, scope boundaries, and testable acceptance criteria. Use at the start of a feature or when a request is vague, contested, or larger than it looks. Not needed for well-specified small changes.
 - `project-intake`: Interviews you when a project starts (or when the stack changes) and personalizes the swarm to it. Use right after vendoring AgentSmith into a repo, or any time you want to re-tighten the agents/skills. Writes .agentsmith/profile and prunes/tunes the agents to match your stack.
-- `qa-architect`: Cross-domain QA architect for risk-based test strategy and quality gates. Use proactively to review test plans and release readiness.
+- `qa-engineer`: Risk-based test strategy and exploratory testing - finds the cases engineers did not think of, especially around edge conditions, state, and failure. Use before a risky release or on a feature where being wrong is expensive. Engineers own their own unit and integration tests.
 - `refactoring-specialist`: Improves the structure of existing code without changing its behavior - extracting duplication, untangling large functions, clarifying names, reducing coupling. Use when code is hard to change, before building on a messy area, or after a feature lands. Never mixes refactoring with behavior changes.
-- `release-manager`: Release manager workflow agent for planning, executing, and validating releases. Use proactively before deploying changes to staging/production.
+- `reliability-engineer`: Makes a service observable and dependable - SLIs and SLOs, instrumentation, useful alerts, and the operational readiness checks before something carries real traffic. Use when a service needs monitoring, when alerts are noisy or absent, or before a launch.
 - `security-architect`: Security architect for threat modeling and secure design reviews. Use proactively for designs involving auth, data, or external exposure.
+- `system-architect`: Advisory review of a design or plan for web apps and services - boundaries, data ownership, integration patterns, failure modes, and the non-functional requirements people forget. Use when a design is drafted, before committing to a hard-to-reverse decision. Advises; does not gate.
 - `technical-writer`: Writes and maintains project documentation - READMEs, setup guides, API docs, architecture decision records, and changelogs. Use when docs are missing, stale, or a change alters how someone uses or operates the system.
 - `test-runner`: Runs the project's tests, build, lint, and type checks, then diagnoses and fixes what fails. Use to verify a change actually works, to get a red suite back to green, or before committing. Executes the suite - it does not just design test strategy.
 
@@ -27,7 +27,7 @@ This domain holds **reusable, cross-domain** roles that provide short, expert re
 - They provide **brief reviews** focusing on:
   - risks, missing requirements, and unsafe assumptions
   - concrete mitigations and next steps
-- `orchestrator` and workflow agents (`release-manager`, `incident-review`) also live here.
+- `orchestrator` and workflow agents (`platform-engineer`, `incident-review`) also live here.
 
 ### Key skills commonly used
 

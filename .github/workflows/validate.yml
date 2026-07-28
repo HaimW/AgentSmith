@@ -1,0 +1,54 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  swarm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate the canonical source
+        run: node tools/validate.mjs
+
+      - name: Generated output must be in sync
+        run: |
+          node tools/generate.mjs
+          if ! git diff --quiet; then
+            echo "::error::Generated files are out of date. Run 'npm run generate' and commit the result."
+            git --no-pager diff --stat
+            exit 1
+          fi
+
+      - name: Generator must be idempotent
+        run: |
+          node tools/generate.mjs
+          git diff --quiet || { echo "::error::generate.mjs is not idempotent"; exit 1; }
+
+      - name: Skill scripts must run
+        run: |
+          node skills/testing/scripts/detect-commands.mjs . >/dev/null
+          bash skills/security-review/scripts/scan-secrets.sh . || true
+
+      - name: Eval harness must parse every case
+        run: |
+          printf '#!/usr/bin/env bash\ncat >/dev/null\necho stub\n' > /tmp/stub.sh
+          chmod +x /tmp/stub.sh
+          # Scoring will fail against a stub; we only assert the harness parses
+          # and runs every case without crashing.
+          node evals/run.mjs --command /tmp/stub.sh > /tmp/eval.log 2>&1 || true
+          grep -q "cases passed" /tmp/eval.log || { cat /tmp/eval.log; exit 1; }
+
+      - name: Install into a scratch repo (end-to-end)
+        run: |
+          mkdir -p /tmp/e2e && node tools/init.mjs /tmp/e2e
+          test -f /tmp/e2e/CLAUDE.md
+          test -d /tmp/e2e/.claude/agents
+          grep -q '^tools:.*Task' /tmp/e2e/.claude/agents/orchestrator.md

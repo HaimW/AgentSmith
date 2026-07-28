@@ -13,6 +13,7 @@
 // Zero dependencies (Node >= 18 stdlib). Idempotent: running twice makes no diff.
 import {
   readFileSync, writeFileSync, readdirSync, mkdirSync, rmSync, cpSync, existsSync,
+  chmodSync,
 } from 'node:fs';
 import { join, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -88,8 +89,21 @@ for (const a of agents) {
   writeFileSync(o('.claude/agents', a.file), claude, 'utf8');
 }
 
-// ---------- copy skills verbatim ----------
+// ---------- copy skills verbatim (includes any scripts/ and reference.md) ----------
 cpSync(p('skills'), o('.claude/skills'), { recursive: true });
+
+// ---------- settings + hooks ----------
+// Emitted only when absent, so a project's own hook config is never clobbered.
+mkdirSync(o('.claude/hooks'), { recursive: true });
+const hookSrc = p('templates/post-edit.sh');
+if (existsSync(hookSrc)) {
+  cpSync(hookSrc, o('.claude/hooks/post-edit.sh'));
+  try { chmodSync(o('.claude/hooks/post-edit.sh'), 0o755); } catch { /* non-posix */ }
+}
+const settingsSrc = p('templates/settings.json');
+if (existsSync(settingsSrc) && !existsSync(o('.claude/settings.json'))) {
+  cpSync(settingsSrc, o('.claude/settings.json'));
+}
 
 // ---------- regenerate domain AGENTS.md indexes ----------
 const domains = readdirSync(p('domains')).filter((d) => existsSync(p('domains', d, 'loop.md')));
@@ -139,11 +153,13 @@ plus reusable skills — under \`.claude/agents/\` and \`.claude/skills/\`.
 1. **Personalize first (once per project):** run the \`project-intake\` agent. It
    interviews you, writes \`.agentsmith/profile.md\`, and prunes/tunes the swarm to
    your stack.
-2. **For any non-trivial change:** invoke the \`orchestrator\` agent. It picks the
-   domain, runs the collaboration loop (PM → design → engineering → architecture
-   review → QA → devops), and dispatches to the specialists below.
-3. **For a targeted review:** invoke a single specialist (e.g. \`security-architect\`,
-   \`web-system-architect\`).
+2. **For any non-trivial change:** invoke the \`orchestrator\` agent. It triages the
+   size, runs the domain's delivery flow, dispatches the specialists below, and
+   keeps a shared task workspace under \`.agentsmith/tasks/\`.
+3. **Day to day:** \`code-reviewer\` on a diff, \`debugger\` on a live failure,
+   \`test-runner\` to get the suite green, \`security-architect\` for a targeted review.
+
+Reviews are **advisory** — the implementing engineer decides and owns the result.
 
 ## Available agents
 

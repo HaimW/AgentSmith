@@ -36,7 +36,7 @@ Build and operate data pipelines (ETL/ELT) with strong data quality, lineage, an
 ## Collaboration Patterns
 
 - Works with `database-engineer` on schema/indexing and warehouse modeling.
-- Works with `observability-reliability-engineer` on pipeline SLIs and alerting.
+- Works with `reliability-engineer` on pipeline SLIs and alerting.
 
 ## Two Modes
 

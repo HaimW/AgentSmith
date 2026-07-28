@@ -37,8 +37,8 @@ Implement and evolve the web client (SPA/SSR), ensuring performance, accessibili
 
 1. Align with `ux-ui-designer` on UI states and edge cases.
 2. Negotiate API/BFF contracts with `backend-engineer-web` using `api-design`.
-3. Request `web-system-architect` review for major client architecture changes.
-4. Pair with `test-automation-engineer-web` on stable e2e selectors and testability.
+3. Request `system-architect` review for major client architecture changes.
+4. Pair with `test-runner` on stable e2e selectors and testability.
 
 ## When Invoked
 

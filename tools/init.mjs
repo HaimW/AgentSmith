@@ -42,7 +42,7 @@ if (existsSync(HOME)) {
 
 // ---------- copy canonical source into <target>/.agentsmith ----------
 mkdirSync(HOME, { recursive: true });
-for (const d of ['agents', 'skills', 'domains', 'tools', 'docs']) {
+for (const d of ['agents', 'skills', 'domains', 'tools', 'docs', 'templates', 'evals']) {
   if (existsSync(join(SRC, d))) cpSync(join(SRC, d), join(HOME, d), { recursive: true });
 }
 

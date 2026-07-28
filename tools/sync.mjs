@@ -34,7 +34,7 @@ if (!manifest.upstream) {
 }
 
 const sha = (buf) => createHash('sha256').update(buf).digest('hex');
-const SUBDIRS = ['agents', 'skills', 'domains', 'tools', 'docs'];
+const SUBDIRS = ['agents', 'skills', 'domains', 'tools', 'docs', 'templates', 'evals'];
 // Generated files are rebuilt locally by generate.mjs — never sync them.
 const isGenerated = (rel) => rel.endsWith('AGENTS.md');
 

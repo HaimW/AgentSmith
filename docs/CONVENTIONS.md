@@ -6,7 +6,7 @@
 
 ### Naming
 
-- **Agents (roles/workflows)**: lowercase kebab-case (e.g., `backend-system-architect`)
+- **Agents (roles/workflows)**: lowercase kebab-case (e.g., `system-architect`)
 - **Skills**: lowercase kebab-case directory name containing `SKILL.md` (e.g., `skills/api-design/SKILL.md`)
 - **Domains**: snake_case directories under `domains/` (e.g., `backend_heavy`)
 

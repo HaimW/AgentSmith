@@ -21,8 +21,7 @@ them to a project.
 1. **Personalize:** run `project-intake`. Answer its questions honestly; it
    writes `.agentsmith/profile.md` and prunes/tunes the swarm.
 2. **Run a team:** give `orchestrator` a one-line request (e.g. "add rate
-   limiting to the public API"). Watch how it sequences roles and gates on the
-   architecture review.
+   limiting to the public API"). Watch how it triages the size and routes it.
 3. **Save the output.** Keep the consolidated plan — it's your baseline.
 
 ## Day 2+ — the improvement loop
@@ -55,9 +54,9 @@ knowing the names helps you reason about what your swarm is doing.
 | Pattern | What it is | When to reach for it |
 |---------|-----------|----------------------|
 | **Router** | Classify the request first, then send it down the smallest path | Always — it's why `orchestrator` triages trivial / standard / complex |
-| **Sequential pipeline** | Fixed stage order, each feeding the next | The domain loops (PM → design → eng → review → QA) |
+| **Sequential pipeline** | Fixed stage order, each feeding the next | The `embedded` loop, where staged V&V is genuine |
 | **Parallel fan-out / fan-in** | Independent agents at once, then merge | Frontend ∥ backend proposals; architecture ∥ security review |
-| **Evaluator–optimizer** | Produce → critique → revise, bounded | Review gates and failing tests — the loop that makes output actually good |
+| **Evaluator–optimizer** | Produce → critique → revise, bounded | Failing tests and serious review findings — the loop that makes output good |
 | **Hierarchical** | A lead delegates to other leads | Large work; needs the `Task` tool to dispatch |
 
 Three rules that matter more than the names:
@@ -70,6 +69,24 @@ Three rules that matter more than the names:
    path. Loops without stop conditions burn time and money.
 3. **Match process to size.** Six agents on a typo is waste. The fast path exists
    so the heavy loop stays credible when you actually need it.
+4. **Reviews advise; engineers decide.** For web and services work there is no
+   approval committee — a reviewer surfaces risk, the implementing engineer owns
+   the call. Only `embedded` keeps staged gates, because there they are real.
+
+## Measure, don't guess
+
+The habit that separates a swarm that improves from one that drifts:
+
+```bash
+node evals/run.mjs --save baseline     # before you touch an agent
+# ... edit agents/<role>.md ...
+node evals/run.mjs --compare baseline  # did it help? did it break something else?
+```
+
+Cases live in `evals/cases/` and score agents against fixtures containing
+deliberately seeded defects, so results are objective. **Add a case every time an
+agent disappoints you in real work** — that is what makes the suite worth having.
+See [`evals/README.md`](../evals/README.md).
 
 ## The cross-cutting doers
 
@@ -87,7 +104,7 @@ are the ones you'll reach for daily:
 
 ```yaml
 ---
-name: web-system-architect
+name: system-architect
 description: <what + when — the trigger>   # sharper description = better routing
 model: sonnet        # omit to inherit the strong default; set light for reviews
 tools: Read, Grep, Glob, WebSearch         # read-only for reviewers; add Edit/Bash for implementers
@@ -98,8 +115,8 @@ skills: architecture-review, security-review
 Guidelines that ship with this template:
 
 - **Architects / PMs / QA / designers**: read-only tools, `model: sonnet`.
-- **Engineers / DevOps / test-automation**: read-write tools, inherit the strong
-  model.
+- **Engineers / platform / reliability**: read-write tools, inherit the strong model.
+- **`orchestrator`** needs the `Task` tool — without it, it cannot dispatch anything.
 - **Descriptions** should say both *what* the agent is for and *when* to use it —
   that text is what the runtime matches against.
 
