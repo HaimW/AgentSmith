@@ -41,7 +41,9 @@ router.post('/orders/:id/pay', async (req, res) => {
 });
 
 // SEEDED DEFECT 6 (secret in source + leaked internals in the error path).
-const STRIPE_KEY = 'sk_live_51H8xQ2eZvKYlo2Ck9Xm3PqRsTuVwXyZa';
+// Deliberately fake: shaped like a live key so a reviewer flags it, but obviously
+// a placeholder so real secret scanners and push protection are not confused.
+const STRIPE_KEY = 'sk_live_000000000000000000000000EXAMPLE';
 
 router.use((err, req, res, next) => {
   res.status(500).json({ error: err.stack });
