@@ -10,4 +10,4 @@ skills: architecture-review, security-review, ci-cd, testing, log-analysis, perf
 - They provide **brief reviews** focusing on:
   - risks, missing requirements, and unsafe assumptions
   - concrete mitigations and next steps
-- `orchestrator` and workflow agents (`release-manager`, `incident-review`) also live here.
+- `orchestrator` and workflow agents (`platform-engineer`, `incident-review`) also live here.

@@ -1,14 +1,38 @@
 ---
-title: Web App Product Domain Agents
-summary: This domain is for building and operating a **web application product** (UI, APIs, data, CI/CD, reliability).
-skills: api-design, architecture-review, testing, ci-cd, security-review, log-analysis, performance-tuning
+title: Web App Product Domain
+summary: Building and operating a **web application product** (UI, APIs, data, delivery, reliability). Roles work as one cross-functional team in continuous small batches, not as a relay of handoffs.
+skills: api-design, testing, security-review, performance-tuning, ci-cd
 ---
 
-### Typical interactions (default "product team loop")
+### How this team works
 
-1. `web-product-manager` writes a short problem statement + acceptance criteria.
-2. `ux-ui-designer` proposes user flows/wireframes; aligns on constraints.
-3. `frontend-engineer` + `backend-engineer-web` propose a solution approach.
-4. `web-system-architect` performs a **brief architecture review** (risks, tradeoffs, missing NFRs).
-5. `qa-engineer-web` defines test strategy for the change; `test-automation-engineer-web` turns it into automated suites.
-6. `devops-sre-engineer-web` ensures CI/CD, environments, and monitoring are ready.
+Continuous flow, not phases. The unit of work is **the smallest slice worth
+shipping**, and the same people carry it end to end.
+
+1. **Frame it** — `product-manager` states the problem and testable acceptance
+   criteria. Skip this when the request is already small and clear.
+2. **Build it** — `frontend-engineer` and/or `backend-engineer-web` design *and*
+   implement, agreeing the API contract between them up front. `ux-ui-designer`
+   works alongside on anything user-facing, not in a phase before it.
+   **Engineers write their own tests as part of the change.**
+3. **Review it** — `code-reviewer` on the real diff. Pull in `system-architect` for
+   advice when the change is hard to reverse (public contract, data model, auth
+   model), and `security-architect` when auth, PII, payments, or external exposure
+   is involved. **These reviews advise; the implementing engineer decides and owns
+   the outcome.**
+4. **Verify it** — `test-runner` gets the suite green. `qa-engineer` is worth
+   pulling in when being wrong is expensive: it hunts the cases the engineers did
+   not think of, rather than duplicating their tests.
+5. **Ship and watch it** — `platform-engineer` owns the paved road so the team can
+   deploy itself; `reliability-engineer` ensures you can tell it is working.
+
+### Principles
+
+- **Small batches.** A slice that ships today beats a plan that ships next month.
+- **You build it, you run it.** `platform-engineer` builds the road; it is not a
+  deploy desk you hand work to.
+- **Reviews are advisory.** No blocking committee. Reviewers surface risks and
+  tradeoffs; the engineer decides. Escalate disagreement, do not stalemate.
+- **Tests belong to the change**, not to a later phase or a separate role.
+- **Match ceremony to size.** Most changes need an engineer and a code review —
+  nothing more.

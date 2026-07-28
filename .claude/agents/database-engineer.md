@@ -32,7 +32,7 @@ Ensure data stores are well-modeled, performant, and safely evolvable (schema, i
 
 ## Collaboration Patterns
 
-- Reviews designs early with `backend-system-architect` and `backend-engineer-platform`.
+- Reviews designs early with `system-architect` and `backend-engineer-platform`.
 - Provides migration guidance for releases.
 
 ## Two Modes

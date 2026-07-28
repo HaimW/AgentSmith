@@ -37,8 +37,8 @@ Build web-facing backend capabilities (APIs/BFF, business logic, security) with 
 ## Collaboration Patterns
 
 1. Align API contracts with `frontend-engineer` early.
-2. Request `web-system-architect` review for boundary/caching/service changes.
-3. Coordinate with `devops-sre-engineer-web` on deployment, observability, and rollout.
+2. Request `system-architect` review for boundary/caching/service changes.
+3. Coordinate with `platform-engineer` on deployment, observability, and rollout.
 4. Provide test hooks and stable fixtures to QA and automation.
 
 ## Two Modes

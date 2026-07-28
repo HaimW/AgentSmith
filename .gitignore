@@ -1,0 +1,4 @@
+node_modules/
+evals/results/
+!evals/results/.gitkeep
+.DS_Store

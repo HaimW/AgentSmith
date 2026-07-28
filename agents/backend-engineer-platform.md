@@ -35,9 +35,9 @@ Build backend services and jobs that are correct, secure, observable, and evolva
 
 ## Collaboration Patterns
 
-- Requests review from `backend-system-architect` for boundary and ownership changes.
+- Requests review from `system-architect` for boundary and ownership changes.
 - Aligns with `database-engineer` on schema/indexing and migrations.
-- Aligns with `observability-reliability-engineer` on SLIs/SLOs and instrumentation.
+- Aligns with `reliability-engineer` on SLIs/SLOs and instrumentation.
 
 ## Two Modes
 

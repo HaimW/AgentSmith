@@ -26,7 +26,7 @@ Design usable, accessible user experiences for the web product, producing artifa
 
 ## Inputs
 
-- Problem statement + acceptance criteria from `web-product-manager`.
+- Problem statement + acceptance criteria from `product-manager`.
 - Technical constraints (platform, performance, browser support).
 
 ## Outputs
@@ -38,8 +38,8 @@ Design usable, accessible user experiences for the web product, producing artifa
 ## Collaboration Patterns
 
 1. Align early with `frontend-engineer` on feasibility and UI architecture constraints.
-2. Provide explicit UI states to `qa-engineer-web` for test planning.
-3. Address architect feedback from `web-system-architect` when UX impacts NFRs.
+2. Provide explicit UI states to `qa-engineer` for test planning.
+3. Address architect feedback from `system-architect` when UX impacts NFRs.
 
 ## Output Format
 
