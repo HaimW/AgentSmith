@@ -22,10 +22,10 @@ Follow the `project-tailoring` skill. In short:
 1. **Load defaults.** If `.agentsmith/profile.json` exists, read it and offer its
    values as defaults so this run *refines* rather than resets.
 2. **Interview.** Ask the question bank from the `project-tailoring` skill in a
-   few batched rounds (use `AskUserQuestion` in Claude Code; a numbered list in
-   Cursor). Do not ask more than is needed — skip topics the repo already
-   answers (detect stack from `package.json`, `pyproject.toml`, `Cargo.toml`,
-   `go.mod`, `platformio.ini`, etc. before asking).
+   few batched rounds (use `AskUserQuestion`). Do not ask more than is needed —
+   skip topics the repo already answers (detect stack from `package.json`,
+   `pyproject.toml`, `Cargo.toml`, `go.mod`, `platformio.ini`, etc. before
+   asking).
 3. **Write the profile.** Save `.agentsmith/profile.md` (human-readable) and
    `.agentsmith/profile.json` (machine-readable) with every answer.
 4. **Prune.** Delete agents whose `domain` is not in the selected domain set
@@ -39,7 +39,7 @@ Follow the `project-tailoring` skill. In short:
 
 ## Guardrails
 
-- Never delete files outside `.cursor/`, `.claude/`, `agents/`, `skills/`, and
+- Never delete files outside `.claude/`, `agents/`, `skills/`, and
   `.agentsmith/`.
 - Show the list of files you will delete and get confirmation before removing.
 - Keep the injected `## Project Context` block short (≤ 12 lines) — it is

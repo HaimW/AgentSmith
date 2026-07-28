@@ -130,7 +130,7 @@
 
   <section>
     <h2>The one idea to hold onto</h2>
-    <p class="sub">There is exactly <strong>one place you edit</strong> (the source) and <strong>one command that builds everything else</strong>. Every folder Cursor and Claude Code actually read is generated — treat it as output, like compiled code.</p>
+    <p class="sub">There is exactly <strong>one place you edit</strong> (the source) and <strong>one command that builds everything else</strong>. Every folder Claude Code actually reads is generated — treat it as output, like compiled code.</p>
     <div class="cards">
       <div class="card">
         <span class="tag">the WHO</span>
@@ -167,18 +167,16 @@ flowchart LR
   G(["node generate.mjs"])
   subgraph OUT["GENERATED · never edit"]
     direction TB
-    C1[".cursor/ agents + skills"]
     C2[".claude/ agents + skills"]
     CM["CLAUDE.md"]
   end
   A --> G
   S --> G
   D --> G
-  G --> C1
   G --> C2
   G --> CM
   class A,S,D hot
-  class C1,C2,CM cold
+  class C2,CM cold
   classDef hot fill:#3a2a20,stroke:#e27a45,color:#f2e6dd,stroke-width:1.5px
   classDef cold fill:#1e2c38,stroke:#5aa0cb,color:#e0eaf2,stroke-width:1.5px
 </pre>
@@ -296,13 +294,11 @@ flowchart TB
     direction TB
     AS[".agentsmith/  · editable source + generate.mjs, sync.mjs"]
     PR[".agentsmith/profile.md  · written by project-intake"]
-    CU[".cursor/  · read by Cursor"]
     CL[".claude/ + CLAUDE.md  · read by Claude Code"]
   end
-  AS --> CU
   AS --> CL
   class AS,PR hot
-  class CU,CL cold
+  class CL cold
   classDef hot fill:#3a2a20,stroke:#e27a45,color:#f2e6dd,stroke-width:1.5px
   classDef cold fill:#1e2c38,stroke:#5aa0cb,color:#e0eaf2,stroke-width:1.5px
 </pre>
@@ -313,11 +309,11 @@ flowchart TB
 
   <section>
     <h2>Command cheat sheet</h2>
-    <pre class="cmd"><span class="k">node</span> tools/generate.mjs              <span class="c"># rebuild .cursor/ + .claude/ from source</span>
-<span class="k">node</span> tools/init.mjs &lt;path&gt; --tool both  <span class="c"># install swarm into another repo</span>
+    <pre class="cmd"><span class="k">node</span> tools/generate.mjs          <span class="c"># rebuild .claude/ + CLAUDE.md from source</span>
+<span class="k">node</span> tools/init.mjs &lt;path&gt;       <span class="c"># install swarm into another repo</span>
 <span class="k">node</span> .agentsmith/tools/sync.mjs      <span class="c"># pull upstream updates (conflict-safe)</span>
 
-<span class="c"># in Cursor / Claude Code, invoke agents by name:</span>
+<span class="c"># in Claude Code, invoke agents by name:</span>
 project-intake     <span class="c"># interview + personalize (run once per project)</span>
 orchestrator       <span class="c"># run a full team on a task</span>
 security-architect <span class="c"># or any single specialist for a targeted review</span></pre>
@@ -332,7 +328,7 @@ security-architect <span class="c"># or any single specialist for a targeted rev
       <dt>orchestrator</dt><dd>The lead agent that runs a whole team for you.</dd>
       <dt>project-intake</dt><dd>The agent that interviews you and tailors the swarm to one project.</dd>
       <dt>canonical</dt><dd>The single source you edit: <code>agents/</code>, <code>skills/</code>, <code>domains/</code>.</dd>
-      <dt>generated</dt><dd>Built output the tools read: <code>.cursor/</code>, <code>.claude/</code>, <code>CLAUDE.md</code>. Never hand-edit.</dd>
+      <dt>generated</dt><dd>Built output Claude Code reads: <code>.claude/</code>, <code>CLAUDE.md</code>. Never hand-edit.</dd>
       <dt>init / sync</dt><dd>Install the swarm into a repo / pull later updates without losing local edits.</dd>
     </dl>
   </section>

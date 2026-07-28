@@ -71,6 +71,6 @@ Reusable playbooks live in `.claude/skills/`: `api-design`, `architecture-review
 
 ## Editing the swarm
 
-Do **not** edit `.claude/` or `.cursor/` by hand — they are generated. Edit the
+Do **not** edit `.claude/` by hand — it is generated. Edit the
 canonical source in `agents/*.md`, `skills/*/SKILL.md`, and `domains/*/loop.md`,
 then run `node tools/generate.mjs`.

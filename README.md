@@ -1,10 +1,9 @@
 # AgentSmith — an agentic AI engineering org (template)
 
-AgentSmith is a **tool-agnostic swarm of engineering subagents** plus reusable
-skills, modeled on a senior engineering organization. You write each role once,
-and AgentSmith generates the runnable folders for **Cursor** (`.cursor/`) and
-**Claude Code** (`.claude/` + `CLAUDE.md`). Drop it into any repo and personalize
-it to that project.
+AgentSmith is a **swarm of engineering subagents** plus reusable skills, modeled
+on a senior engineering organization. You write each role once in one canonical
+place, and AgentSmith generates the runnable **Claude Code** folders (`.claude/` +
+`CLAUDE.md`). Drop it into any repo and personalize it to that project.
 
 It provides:
 
@@ -20,19 +19,18 @@ It provides:
 ## Single source of truth
 
 Everything is generated from canonical, hand-edited source. **Never edit
-`.cursor/` or `.claude/` by hand.**
+`.claude/` by hand.**
 
 ```text
 agents/<role>.md          # canonical role: frontmatter (tools/model/skills) + body
 skills/<skill>/SKILL.md    # canonical reusable playbooks
 domains/<domain>/loop.md   # canonical: domain summary + collaboration loop
 tools/
-  generate.mjs             # canonical -> .cursor/ + .claude/ + CLAUDE.md   (zero deps)
+  generate.mjs             # canonical -> .claude/ + CLAUDE.md   (zero deps)
   init.mjs                 # vendor the swarm into another repo
   sync.mjs                 # update a vendored copy from this upstream
 
 # generated (committed for convenience, do not edit):
-.cursor/agents/  .cursor/skills/
 .claude/agents/  .claude/skills/
 domains/<domain>/AGENTS.md
 CLAUDE.md
@@ -51,20 +49,20 @@ The generator is idempotent — running it twice produces no diff.
 ### A. Brand-new repo (use this template)
 
 1. On GitHub, click **Use this template** (or clone this repo).
-2. `node tools/generate.mjs` to (re)build the tool folders.
-3. Open in Cursor or Claude Code and run the `project-intake` agent to
-   personalize the swarm; then run `orchestrator` on your first task.
+2. `node tools/generate.mjs` to (re)build the generated folders.
+3. Open in Claude Code and run the `project-intake` agent to personalize the
+   swarm; then run `orchestrator` on your first task.
 
 ### B. Add the swarm to an existing repo
 
 ```bash
 # from an AgentSmith checkout:
-node tools/init.mjs /path/to/your-project --tool both   # or: cursor | claude
+node tools/init.mjs /path/to/your-project
 ```
 
 This vendors the canonical source into `your-project/.agentsmith/`, stamps the
-upstream commit, and generates `.cursor/` / `.claude/` / `CLAUDE.md` at the
-project root. Commit those, then run `project-intake`.
+upstream commit, and generates `.claude/` + `CLAUDE.md` at the project root.
+Commit those, then run `project-intake`.
 
 Pull upstream improvements later:
 
@@ -101,9 +99,15 @@ For a targeted review, invoke a single specialist (e.g. `security-architect`).
   `skills/<name>/SKILL.md`, then regenerate.
 - **Add a domain:** create `domains/<domain>/loop.md` and set `domain:` on the
   roles that belong to it, then regenerate.
+- **Add another tool (e.g. Cursor):** Claude Code is currently the only emit
+  target. The canonical source is tool-neutral, so supporting another tool means
+  adding one emit block in `tools/generate.mjs` (see the comment above the emit
+  loop) — no changes to any agent or skill.
 
 See [`docs/GETTING-STARTED.md`](docs/GETTING-STARTED.md) for a hands-on path to
-learning and improving your swarm over time.
+learning and improving your swarm over time, and
+[`docs/CONVENTIONS.md`](docs/CONVENTIONS.md) for naming rules and the architect
+output contract.
 
 ## Conventions
 
@@ -111,3 +115,5 @@ learning and improving your swarm over time.
 - **Domains:** snake_case directories under `domains/`.
 - **Architect roles** produce concise reviews: **Summary / Strengths / Risks /
   Recommendations**.
+
+Full details in [`docs/CONVENTIONS.md`](docs/CONVENTIONS.md).

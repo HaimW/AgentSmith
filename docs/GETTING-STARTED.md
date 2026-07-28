@@ -9,8 +9,8 @@ Three layers, each single-sourced:
 
 | Layer | "Answers" | Lives in | Analogy |
 |-------|-----------|----------|---------|
-| **Agents** (`agents/*.md`) | *who* does the work | canonical → `.cursor` / `.claude` | job descriptions |
-| **Skills** (`skills/*/SKILL.md`) | *how* a recurring task is done | canonical → `.cursor` / `.claude` | team playbooks |
+| **Agents** (`agents/*.md`) | *who* does the work | canonical → `.claude/agents` | job descriptions |
+| **Skills** (`skills/*/SKILL.md`) | *how* a recurring task is done | canonical → `.claude/skills` | team playbooks |
 | **Domains** (`domains/*/loop.md`) | *how a team collaborates* | canonical → `AGENTS.md` | org chart + process |
 
 The **orchestrator** wires them together for a task; **project-intake** tailors

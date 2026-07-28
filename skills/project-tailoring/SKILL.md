@@ -47,8 +47,8 @@ Group the questions; batch them:
 - Drop `data-engineer` / `database-engineer` if "none" for data stores.
 - Drop `security-architect` only if the user explicitly declines it; otherwise
   keep it whenever auth/PII/payments/exposure exist.
-- Removing an agent means deleting it from `.cursor/agents/`, `.claude/agents/`,
-  and `agents/` (canonical), so it stays gone after a regenerate.
+- Removing an agent means deleting it from `.claude/agents/` and `agents/`
+  (canonical), so it stays gone after a regenerate.
 
 ### Frontmatter tuning
 

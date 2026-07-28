@@ -8,8 +8,8 @@ mermaid-aware viewer.)
 ## The one idea
 
 There is exactly **one place you edit** (the *canonical source*) and **one command
-that builds everything else**. Every folder Cursor and Claude Code actually read
-is *generated* — treat it like compiled code and never hand-edit it.
+that builds everything else**. Every folder Claude Code actually reads is
+*generated* — treat it like compiled code and never hand-edit it.
 
 Three kinds of things live in the source:
 
@@ -35,18 +35,16 @@ flowchart LR
   G(["node generate.mjs"])
   subgraph OUT["GENERATED · never edit"]
     direction TB
-    C1[".cursor/ agents + skills"]
     C2[".claude/ agents + skills"]
     CM["CLAUDE.md"]
   end
   A --> G
   S --> G
   D --> G
-  G --> C1
   G --> C2
   G --> CM
   class A,S,D hot
-  class C1,C2,CM cold
+  class C2,CM cold
   classDef hot fill:#3a2a20,stroke:#e27a45,color:#f2e6dd
   classDef cold fill:#1e2c38,stroke:#5aa0cb,color:#e0eaf2
 ```
@@ -66,7 +64,7 @@ folders at the root.
 node tools/generate.mjs
 
 # existing repo (run from an AgentSmith checkout):
-node tools/init.mjs /path/to/your-project --tool both
+node tools/init.mjs /path/to/your-project
 ```
 
 ### 2. Personalize it to the project
@@ -142,13 +140,11 @@ flowchart TB
     direction TB
     AS[".agentsmith/  · editable source + generate.mjs, sync.mjs"]
     PR[".agentsmith/profile.md  · written by project-intake"]
-    CU[".cursor/  · read by Cursor"]
     CL[".claude/ + CLAUDE.md  · read by Claude Code"]
   end
-  AS --> CU
   AS --> CL
   class AS,PR hot
-  class CU,CL cold
+  class CL cold
   classDef hot fill:#3a2a20,stroke:#e27a45,color:#f2e6dd
   classDef cold fill:#1e2c38,stroke:#5aa0cb,color:#e0eaf2
 ```
@@ -156,11 +152,11 @@ flowchart TB
 ## Command cheat sheet
 
 ```bash
-node tools/generate.mjs               # rebuild .cursor/ + .claude/ from source
-node tools/init.mjs <path> --tool both  # install swarm into another repo
-node .agentsmith/tools/sync.mjs       # pull upstream updates (conflict-safe)
+node tools/generate.mjs          # rebuild .claude/ + CLAUDE.md from source
+node tools/init.mjs <path>       # install swarm into another repo
+node .agentsmith/tools/sync.mjs  # pull upstream updates (conflict-safe)
 
-# in Cursor / Claude Code, invoke agents by name:
+# in Claude Code, invoke agents by name:
 project-intake      # interview + personalize (run once per project)
 orchestrator        # run a full team on a task
 security-architect  # or any single specialist for a targeted review
@@ -176,7 +172,7 @@ security-architect  # or any single specialist for a targeted review
 | **orchestrator** | The lead agent that runs a whole team for you. |
 | **project-intake** | The agent that interviews you and tailors the swarm to one project. |
 | **canonical** | The single source you edit: `agents/`, `skills/`, `domains/`. |
-| **generated** | Built output the tools read: `.cursor/`, `.claude/`, `CLAUDE.md`. Never hand-edit. |
+| **generated** | Built output Claude Code reads: `.claude/`, `CLAUDE.md`. Never hand-edit. |
 | **init / sync** | Install the swarm into a repo / pull later updates without losing local edits. |
 
 ---

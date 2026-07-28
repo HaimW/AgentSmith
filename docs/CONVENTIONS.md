@@ -1,6 +1,6 @@
 ## Agentic Infra Conventions (Project Rules)
 
-> `.cursor/` and `.claude/` are **generated** from canonical source. Edit
+> `.claude/` and `CLAUDE.md` are **generated** from canonical source. Edit
 > `agents/*.md`, `skills/*/SKILL.md`, and `domains/*/loop.md`, then run
 > `node tools/generate.mjs`. Never hand-edit the generated folders.
 
@@ -14,9 +14,9 @@
 
 - **Roles** ("who"): defined once in `agents/<role>.md` with frontmatter
   (`name`, `description`, `domain`, `tools`, `model`, `skills`) + body. Generated
-  into `.cursor/agents/` and `.claude/agents/`.
+  into `.claude/agents/`.
 - **Skills** ("how"): reusable playbooks under `skills/<skill>/SKILL.md`, shared
-  across roles/domains. Generated into both tool folders verbatim.
+  across roles/domains. Generated into `.claude/skills/` verbatim.
 
 ### Architect Output Contract
 

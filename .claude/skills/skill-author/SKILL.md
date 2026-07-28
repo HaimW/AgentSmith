@@ -1,6 +1,6 @@
 ---
 name: skill-author
-description: Guides the agent through designing and scaffolding new Agent Skills (SKILL.md files) for this project. Use when you want to create, refine, or extend skills under .cursor/skills/ with clear purpose, triggers, and structure.
+description: Guides the agent through designing and scaffolding new Agent Skills (SKILL.md files) for this project. Use when you want to create, refine, or extend skills under skills/ with clear purpose, triggers, and structure.
 ---
 
 # Skill Author
@@ -56,7 +56,8 @@ Keep the whole file under ~500 lines.
 
 ### 3. Implementation
 
-When implementing a new skill under `.cursor/skills/<skill-name>/SKILL.md`:
+When implementing a new skill under `skills/<skill-name>/SKILL.md` (the
+canonical source — `.claude/skills/` is generated from it):
 
 - Use this template, adapting sections as needed:
 
@@ -117,6 +118,7 @@ When the user asks for a new agent/role/workflow skill:
 1. Apply the **Discovery** step and restate the summary back briefly.
 2. Propose a **skill name** and **description**.
 3. Draft the SKILL.md content using the template above, tuned to the context.
-4. Create or update the file under `.cursor/skills/<skill-name>/SKILL.md`.
+4. Create or update the file under `skills/<skill-name>/SKILL.md`, then run
+   `node tools/generate.mjs` to regenerate `.claude/skills/`.
 5. Tell the user how and when this new skill will be automatically applied.
 
