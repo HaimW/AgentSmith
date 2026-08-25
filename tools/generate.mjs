@@ -15,7 +15,7 @@ import {
   readFileSync, writeFileSync, readdirSync, mkdirSync, rmSync, cpSync, existsSync,
   chmodSync,
 } from 'node:fs';
-import { join, dirname, basename } from 'node:path';
+import { join, dirname, basename, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 // SRC  = where the canonical source lives (parent of this tools/ dir).
@@ -27,6 +27,9 @@ const SRC = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = process.env.AGENTSMITH_OUT
   ? process.env.AGENTSMITH_OUT
   : basename(SRC) === '.agentsmith' ? dirname(SRC) : SRC;
+// Path prefix used in generated docs: empty in the template repo, '.agentsmith/'
+// when vendored, so CLAUDE.md points at where the canonical source actually is.
+const SRCREL = SRC === OUT ? '' : `${relative(OUT, SRC)}/`;
 const p = (...a) => join(SRC, ...a);       // read canonical source + write docs
 const o = (...a) => join(OUT, ...a);       // write generated tool folders
 
@@ -174,8 +177,8 @@ Reusable playbooks live in \`.claude/skills/\`: ${
 ## Editing the swarm
 
 Do **not** edit \`.claude/\` by hand — it is generated. Edit the
-canonical source in \`agents/*.md\`, \`skills/*/SKILL.md\`, and \`domains/*/loop.md\`,
-then run \`node tools/generate.mjs\`.
+canonical source in \`${SRCREL}agents/*.md\`, \`${SRCREL}skills/*/SKILL.md\`, and
+\`${SRCREL}domains/*/loop.md\`, then run \`node ${SRCREL}tools/generate.mjs\`.
 `;
 writeFileSync(o('CLAUDE.md'), claudeMd, 'utf8');
 

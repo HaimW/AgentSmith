@@ -73,6 +73,44 @@ This vendors the canonical source into `your-project/.agentsmith/`, stamps the
 upstream commit, and generates `.claude/` + `CLAUDE.md` at the project root.
 Commit those, then run `project-intake`.
 
+You don't need a local terminal for any of this — the Claude Code app clones your
+repo into the session, so committed `.claude/agents/` and `.claude/skills/` load
+automatically on the next session.
+
+#### Check what you already have first
+
+`init.mjs` refuses to run if `.agentsmith/` already exists (use `sync.mjs` to
+update an existing install), but a repo that already has Claude Code config needs
+a look before you import. The generator **rebuilds** its output directories, so:
+
+| Path | What happens | Do this first |
+|---|---|---|
+| `.claude/agents/`, `.claude/skills/` | **Deleted and recreated** on every generate | Move any agents/skills you already have into `.agentsmith/agents/` and `.agentsmith/skills/` so they are regenerated alongside the swarm |
+| `CLAUDE.md` (repo root) | **Overwritten unconditionally** | Save its content; fold it back in as the `## Project Context` block `project-intake` writes, or keep it at a different path |
+| `.claude/hooks/post-edit.sh` | Overwritten | Fine unless you wrote your own hook by that name |
+| `.claude/settings.json` | Written **only if absent** — your config is safe | If you already have one, merge in the `PostToolUse` hook from `templates/settings.json` yourself |
+
+A repo with no `.claude/` and no `CLAUDE.md` has nothing to protect — import
+straight away.
+
+#### Editing a vendored swarm
+
+The canonical source lives under `.agentsmith/`, and everything at the top level
+is generated from it. Never edit `.claude/` directly — it does not survive the
+next generate:
+
+```bash
+# edit .agentsmith/agents/<role>.md   <- the source of truth
+node .agentsmith/tools/validate.mjs   # catch broken refs before they bite
+node .agentsmith/tools/generate.mjs   # rebuild .claude/ + CLAUDE.md
+```
+
+Removing a role means deleting it from `.agentsmith/agents/` (not just
+`.claude/agents/`), so it stays gone after a regenerate. If you delete every role
+in a domain, delete `.agentsmith/domains/<domain>/` too, and grep the survivors
+for references to what you removed — `validate.mjs` catches most stale
+cross-references, but only those whose names end in a known role suffix.
+
 Pull upstream improvements later:
 
 ```bash
