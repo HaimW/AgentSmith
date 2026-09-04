@@ -21,11 +21,14 @@ Follow the `project-tailoring` skill. In short:
 
 1. **Load defaults.** If `.agentsmith/profile.json` exists, read it and offer its
    values as defaults so this run *refines* rather than resets.
-2. **Interview.** Ask the question bank from the `project-tailoring` skill in a
-   few batched rounds (use `AskUserQuestion`). Do not ask more than is needed —
-   skip topics the repo already answers (detect stack from `package.json`,
-   `pyproject.toml`, `Cargo.toml`, `go.mod`, `platformio.ini`, etc. before
-   asking).
+2. **Interview.** Before asking anything, read the repo's manifests
+   (`package.json`, `pyproject.toml`, `Cargo.toml`, `go.mod`, `platformio.ini`,
+   etc.) **and** its info files (`README.md`, `CONTRIBUTING.md`,
+   `ARCHITECTURE.md`, any existing `CLAUDE.md`/`AGENTS.md`, `docs/**/*.md`) to
+   pre-fill answers. Then ask the question bank from the `project-tailoring`
+   skill in a few batched rounds (use `AskUserQuestion`), presenting what you
+   found as defaults to confirm rather than asking blind. Do not ask more than
+   is needed — skip topics the repo already answers clearly.
 3. **Write the profile.** Save `.agentsmith/profile.md` (human-readable) and
    `.agentsmith/profile.json` (machine-readable) with every answer.
 4. **Prune.** Delete agents whose `domain` is not in the selected domain set
