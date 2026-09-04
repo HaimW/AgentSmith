@@ -13,10 +13,19 @@ agents and skills so every future run is tight instead of generic.
 
 ## Question Bank
 
-Ask only what the repo can't already tell you. **First auto-detect** from
-manifests (`package.json`, `pyproject.toml`/`requirements.txt`, `Cargo.toml`,
-`go.mod`, `pom.xml`, `platformio.ini`, `Dockerfile`, `.github/workflows/*`) and
-present findings as defaults to confirm.
+Ask only what the repo can't already tell you. **First auto-detect** from:
+
+- Manifests: `package.json`, `pyproject.toml`/`requirements.txt`, `Cargo.toml`,
+  `go.mod`, `pom.xml`, `platformio.ini`, `Dockerfile`, `.github/workflows/*`.
+- Docs and info files: `README.md`, `CONTRIBUTING.md`, `ARCHITECTURE.md`,
+  any existing `CLAUDE.md`/`AGENTS.md`, `docs/**/*.md`, and `.env.example`.
+  These often state the stack, deploy target, data stores, conventions, and
+  non-goals in plain language — read them before asking so the questions can
+  reference and confirm specifics ("I see you deploy to X per the README —
+  still accurate?") instead of asking generically.
+
+Present findings as defaults to confirm; skip a question entirely when a doc
+already gives a clear, unambiguous answer.
 
 Group the questions; batch them:
 
