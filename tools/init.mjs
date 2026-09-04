@@ -89,6 +89,11 @@ execFileSync('node', [join(HOME, 'tools', 'generate.mjs')], {
 console.log(`\n✓ Vendored AgentSmith into ${HOME}`);
 console.log(`✓ Generated .claude/ + CLAUDE.md at ${TARGET}`);
 console.log('\nNext steps:');
-console.log('  1. Commit .agentsmith/, .claude/, and CLAUDE.md.');
-console.log('  2. Run the `project-intake` agent to personalize the swarm to this repo.');
-console.log('  3. Later, run `node .agentsmith/tools/sync.mjs` to pull upstream updates.');
+console.log('  1. Commit the vendored files:');
+console.log(`       cd ${TARGET}`);
+console.log('       git add .agentsmith .claude CLAUDE.md');
+console.log('       git commit -m "Vendor AgentSmith swarm"');
+console.log('  2. Personalize the swarm to this repo:');
+console.log('       claude "run the project-intake agent"');
+console.log('  3. Later, pull upstream updates:');
+console.log(`       node ${join(TARGET, '.agentsmith', 'tools', 'sync.mjs')}`);
